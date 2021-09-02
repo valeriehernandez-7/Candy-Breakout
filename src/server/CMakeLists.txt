@@ -2,12 +2,14 @@ cmake_minimum_required(VERSION 3.20)
 project(server)
 
 set(CMAKE_CXX_STANDARD 17)
+
 set(SFML_INCLUDE_DIR "lib/SFML-2.5.1/include")
 set(SFML_LIBRARY_DIR "lib/SFML-2.5.1/lib")
 set(SFML_DIR "lib/SFML-2.5.1/lib/cmake/SFML")
 
 link_directories(SFML_LIBRARY_DIR)
 include_directories(SFML_INCLUDE_DIR)
+include_directories(src)
 
 find_package(SFML 2.5.1 COMPONENTS system window graphics network audio)
 
@@ -21,14 +23,10 @@ add_executable(server
         src/main.cpp
         src/game/game.cpp
         src/game/game.h
-        src/game/states/state.cpp
-        src/game/states/state.h
-        src/game/states/initialstate.cpp
-        src/game/states/initialstate.h
-        src/game/states/playstate.cpp
-        src/game/states/playstate.h
-        src/game/objects/candy.cpp
-        src/game/objects/bonus.cpp
-        src/game/objects/ball.cpp)
+        src/game/state.cpp
+        src/game/state.h
+        src/game/objects.cpp
+        src/communication/socketserver.cpp
+        src/communication/socketserver.h)
 
 target_link_libraries(server sfml-system sfml-window sfml-graphics sfml-audio sfml-network)
