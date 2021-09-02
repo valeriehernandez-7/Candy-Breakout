@@ -18,4 +18,5 @@ if(SFML_FOUND)
 endif()
 
 add_executable(client src/main.cpp)
+
 target_link_libraries(client sfml-system sfml-window sfml-graphics sfml-audio sfml-network)
