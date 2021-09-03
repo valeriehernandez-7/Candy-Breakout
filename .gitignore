@@ -1,0 +1,13 @@
+# Server Files
+/src/server/cmake-build-debug/
+/src/server/.idea/misc.xml
+/src/server/.idea/modules.xml
+/src/server/.idea/server.iml
+/src/server/.idea/vcs.xml
+
+# Client Files
+/src/client/cmake-build-debug/
+/src/client/.idea/misc.xml
+/src/client/.idea/modules.xml
+/src/client/.idea/server.iml
+/src/client/.idea/vcs.xml
