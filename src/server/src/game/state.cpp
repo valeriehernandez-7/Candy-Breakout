@@ -55,45 +55,311 @@ void InitialState::display(RenderWindow &window) {
 
 PlayState::PlayState(Game *game) : State(game), ballStatus{false}, playerScore{0}, playerMotion{3}, playerHealth{3},
                                    playerSpeed{8}, timer{0} {
+    levelImage.loadFromFile("resources/level/l-" + to_string(getGameState().getLevel()) + ".png");
+    textures[tBall].loadFromFile("resources/assets/i_ball.png");
+    textures[tBallPlus].loadFromFile("resources/assets/i_ball-plus.png");
+    textures[tPlayer].loadFromFile("resources/assets/i_player.png");
+    textures[tPlayerPlus].loadFromFile("resources/assets/i_player-plus.png");
+    textures[tPlayerJunior].loadFromFile("resources/assets/i_player-junior.png");
+    textures[tCandySingle].loadFromFile("resources/assets/i_candy-single.png");
+    textures[tCandyDouble].loadFromFile("resources/assets/i_candy-double.png");
+    textures[tCandyTriple].loadFromFile("resources/assets/i_candy-triple.png");
+    textures[tCandyDeep].loadFromFile("resources/assets/i_candy-deep.png");
+    textures[tBonus].loadFromFile("resources/assets/i_candy-bonus.png");
+    textures[tGameScreen].loadFromFile("resources/screen/i_s-game.png");
 
+    backgroundImage.setTexture(textures[tGameScreen]);
+
+    balls.push_back(textures[tBall]);
+
+    player.setTexture(textures[tPlayer]);
+    player.setPosition(135, 360);
+
+    playerHealthMeter.setPosition(25, 385);
+
+    txtPlayerScore.setFont(getGameState().getFont());
+    txtPlayerScore.setCharacterSize(17);
+    txtPlayerScore.setPosition(85, 392);
+
+    bonusInfo.setFont(getGameState().getFont());
+    bonusInfo.setCharacterSize(30);
+    bonusInfo.setPosition(395, 280);
+
+    levelGenerator();
+    bonusGenerator();
+    ballGenerator();
 }
 
 PlayState::~PlayState() {}
 
 void PlayState::update(Clock &clock) {
+    textures[tPlayerHealth].loadFromFile("resources/assets/i_life-" + to_string(playerHealth) + ".png");
+    playerHealthMeter.setTexture(textures[tPlayerHealth]);
+    txtPlayerScore.setString(to_string(playerScore));
 
+    // player motion zone
+    if (playerMotion == 1) {
+        if (player.getPosition().x > 15) {
+            player.move(-playerSpeed, 0);
+            if (!ballStatus) {
+                for (unsigned b = 0; b < balls.size(); b++) {
+                    balls[b].move(-playerSpeed, 0);
+                }
+            }
+        }
+    }
+    if (playerMotion == 2) {
+        if (player.getPosition().x + player.getGlobalBounds().width < 315) {
+            player.move(playerSpeed, 0);
+            if (!ballStatus) {
+                for (unsigned b = 0; b < balls.size(); b++) {
+                    balls[b].move(playerSpeed, 0);
+                }
+            }
+        }
+    }
+
+    // ball (Y) motion
+    for (unsigned b = 0; b < balls.size(); b++) {
+        balls[b].move(0, balls[b].offset.y);
+    }
+
+    // ball - candy (Y) collision
+    for (unsigned i = 0; i < candies.size(); i++) {
+        for (unsigned b = 0; b < balls.size(); b++) {
+            if (onCollision(candies[i].sprite, balls[b])) {
+                if (candies[i].resistance > 0) {
+                    balls[b].offset.y = -balls[b].offset.y;
+                }
+                balls[b].move(0, balls[b].offset.y);
+                candyManager(candies, i);
+            }
+        }
+    }
+
+    // ball (X) motion
+    for (unsigned b = 0; b < balls.size(); b++) {
+        balls[b].move(balls[b].offset.x, 0);
+    }
+
+    // ball - candy (X) collision
+    for (unsigned i = 0; i < candies.size(); i++) {
+        for (unsigned b = 0; b < balls.size(); b++) {
+            if (onCollision(candies[i].sprite, balls[b])) {
+                if (candies[i].resistance > 0) {
+                    balls[b].offset.x = -balls[b].offset.x;
+                }
+                balls[b].move(balls[b].offset.x, 0);
+                candyManager(candies, i);
+            }
+        }
+    }
+
+    // ball position
+    for (unsigned b = 0; b < balls.size(); b++) {
+        balls[b].position = balls[b].getPosition();
+    }
+
+    // ball - wall collision
+    for (unsigned b = 0; b < balls.size(); b++) {
+        if (balls[b].position.x < 15 || balls[b].position.x > 315 - balls[b].getGlobalBounds().width) {
+            balls[b].offset.x = -balls[b].offset.x;
+        }
+        if (balls[b].position.y < 15) {
+            balls[b].offset.y = -balls[b].offset.y;
+        }
+    }
+
+    // ball - player collision
+    for (unsigned b = 0; b < balls.size(); b++) {
+        if (onCollision(player, balls[b])) {
+            balls[b].offset.y = -balls[b].offset.y;
+            balls[b].move(0, -balls[b].getGlobalBounds().height);
+            if (balls[b].offset.x > 0) {
+                balls[b].offset.x = rand() % 4 + 3;
+            }
+            if (balls[b].offset.x < 0) {
+                balls[b].offset.x = (rand() % 4 + 3) * -1;
+            }
+        }
+    }
+
+    // ball lost
+    for (unsigned b = 0; b < balls.size(); b++) {
+        if (balls[b].position.y > window.getSize().y) {
+            if (balls.size() > 1)
+                balls.erase(balls.begin() + b);
+            else if (playerHealth == 0) {
+                getGameState().totalScore += playerScore;
+                getGameState().setState(State::final);
+            } else if (playerHealth-- > 0) {
+                bonus.bonusDismiss(player, playerSpeed, textures); // dismiss bonus
+                ballGenerator();
+            }
+        }
+    }
+
+    // bonus release
+    for (unsigned i = 0; i < candies.size(); i++) {
+        if (candies[i].resistance <= 0 && candies[i].bonus) {
+            candies[i].sprite.setTexture(textures[tBonus]);
+            candies[i].sprite.move(0, 3);
+            // bonus dismiss
+            if (candies[i].sprite.getPosition().y > window.getSize().y) {
+                candies.erase(candies.begin() + i);
+            }
+            // bonus reward
+            else if (onCollision(candies[i].sprite, player)) {
+                candies.erase(candies.begin() + i);
+                bonus.bonusSelector();
+                bonus.bonusManager(player, playerSpeed, playerHealth, balls, textures);
+                if (bonus.bonusType == "health") {
+                    bonusInfo.setString("    1UP  ");
+                } else if (bonus.bonusType == "balls") {
+                    bonusInfo.setString("+ BALLS");
+                } else if (bonus.bonusType == "ball+Speed") {
+                    bonusInfo.setString("+B SPEED");
+                } else if (bonus.bonusType == "ball-Speed") {
+                    bonusInfo.setString("-B SPEED");
+                } else if (bonus.bonusType == "player+Width") {
+                    bonusInfo.setString("+P WIDTH");
+                } else if (bonus.bonusType == "player-Width") {
+                    bonusInfo.setString("-P WIDTH");
+                } else if (bonus.bonusType == "player+Speed") {
+                    bonusInfo.setString("+P SPEED");
+                }
+                timer = 3;
+            }
+        }
+    }
+
+    // screen manager based on candy state
+    if (candies.empty()) {
+        getGameState().totalScore += playerScore;
+        getGameState().levelNumber++;
+        if (getGameState().levelNumber == 11) {
+            getGameState().gameWon = true;
+            getGameState().setState(State::final);
+        } else {
+            getGameState().setState(State::load);
+        }
+    }
+
+    // counter loading screen
+    if (clock.getElapsedTime().asSeconds() > 1 && timer > 0) {
+        timer--;
+        clock.restart();
+        if (timer <= 0) {
+            bonusInfo.setString("");
+        }
+    }
 }
 
 void PlayState::display(RenderWindow &window) {
-
+    window.draw(backgroundImage);
+    for (auto a: candies) {
+        window.draw(a.sprite);
+    }
+    window.draw(bonusInfo);
+    window.draw(player);
+    for (auto a: balls) {
+        window.draw(a);
+    }
+    window.draw(playerHealthMeter);
+    window.draw(txtPlayerScore);
 }
 
 void PlayState::handler(Event &e) {
-
+    if (e.type == Event::KeyPressed) {
+        if (!ballStatus) {
+            if (e.key.code == Keyboard::Up)
+                ballRelease();
+        }
+        if (e.key.code == Keyboard::Left)
+            playerMotion = 1;
+        if (e.key.code == Keyboard::Right)
+            playerMotion = 2;
+        if (e.key.code == Keyboard::Escape) {
+            getGameState().gameClosed = true;
+            getGameState().totalScore += playerScore;
+            getGameState().setState(State::final);
+        }
+    }
+    if (e.type == Event::KeyReleased) {
+        if (e.key.code == Keyboard::Left)
+            playerMotion = 0;
+        if (e.key.code == Keyboard::Right)
+            playerMotion = 0;
+    }
 }
 
 bool PlayState::onCollision(Sprite &spriteA, Sprite &spriteB) {
-
+    return spriteA.getGlobalBounds().intersects(spriteB.getGlobalBounds());
 }
 
 void PlayState::levelGenerator() {
-
+    for (unsigned y = 0; y < levelImage.getSize().y; y++) {
+        for (unsigned x = 0; x < levelImage.getSize().x; x++) {
+            Color cellColor = levelImage.getPixel(x, y);
+            if (cellColor != Color::White) {
+                int randCandy = (rand() % (9 + 1 - 6)) + 6;
+                Candy candy;
+                if (cellColor == Color(0, 0, 0)) {
+                    if (randCandy == 6) {
+                        candy = Candy(textures[6], 1, 10);
+                    }
+                    if (randCandy == 7) {
+                        candy = Candy(textures[7], 2, 15);
+                    }
+                    if (randCandy == 8) {
+                        candy = Candy(textures[8], 3, 20);
+                    }
+                    if (randCandy == 9) {
+                        candy = Candy(textures[9], 4, 25);
+                    }
+                }
+                candy.sprite.setPosition(x * 30, y * 30);
+                candies.push_back(candy);
+            }
+        }
+    }
 }
 
 void PlayState::ballGenerator() {
-
+    balls[0].offset.x = 0;
+    balls[0].offset.y = 0;
+    balls[0].setPosition(
+            (player.getPosition().x + (player.getGlobalBounds().width / 2)) - balls[0].getGlobalBounds().width / 2,
+            360 - balls[0].getGlobalBounds().height);
+    ballStatus = false;
 }
 
 void PlayState::ballRelease() {
-
+    for (unsigned b = 0; b < balls.size(); b++) {
+        balls[b].offset.x = -3;
+        balls[b].offset.y = -5;
+    }
+    ballStatus = true;
 }
 
 void PlayState::bonusGenerator() {
-
+    for (int i = 0; i < bonus.bonusCount; i++) {
+        int randIndex = rand() % candies.size();
+        if (candies[randIndex].bonus) {
+            randIndex = rand() % candies.size();
+        }
+        candies[randIndex].bonus = true;
+    }
 }
 
 void PlayState::candyManager(vector<Candy> &candies, unsigned &id) {
-    
+    candies[id].resistance--;
+    if (candies[id].resistance == 0) {
+        playerScore += candies[id].points;
+        if (!candies[id].bonus) {
+            candies.erase(candies.begin() + id);
+        }
+    }
 }
 
 /////// LoadState ///////
