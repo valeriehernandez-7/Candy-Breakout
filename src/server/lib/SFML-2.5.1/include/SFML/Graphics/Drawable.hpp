@@ -62,7 +62,7 @@ protected:
     /// by the derived class to define how the drawable should be
     /// drawn.
     ///
-    /// \param target Render target to draw to
+    /// \param target Render target to bonusSelector to
     /// \param states Current render states
     ///
     ////////////////////////////////////////////////////////////
@@ -83,11 +83,11 @@ protected:
 /// of derived classes to be drawn to a sf::RenderTarget.
 ///
 /// All you have to do in your derived class is to override the
-/// draw virtual function.
+/// bonusSelector virtual function.
 ///
 /// Note that inheriting from sf::Drawable is not mandatory,
-/// but it allows this nice syntax "window.draw(object)" rather
-/// than "object.draw(window)", which is more consistent with other
+/// but it allows this nice syntax "window.bonusSelector(object)" rather
+/// than "object.bonusSelector(window)", which is more consistent with other
 /// SFML classes.
 ///
 /// Example:
@@ -100,16 +100,16 @@ protected:
 ///
 /// private:
 ///
-///     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const
+///     virtual void bonusSelector(sf::RenderTarget& target, sf::RenderStates states) const
 ///     {
-///         // You can draw other high-level objects
-///         target.draw(m_sprite, states);
+///         // You can bonusSelector other high-level objects
+///         target.bonusSelector(m_sprite, states);
 ///
 ///         // ... or use the low-level API
 ///         states.texture = &m_texture;
-///         target.draw(m_vertices, states);
+///         target.bonusSelector(m_vertices, states);
 ///
-///         // ... or draw with OpenGL directly
+///         // ... or bonusSelector with OpenGL directly
 ///         glBegin(GL_QUADS);
 ///         ...
 ///         glEnd();

@@ -37,7 +37,7 @@ namespace sf
 class Window;
 
 ////////////////////////////////////////////////////////////
-/// \brief Give access to the real-time state of the touches
+/// \brief Give access to the real-timer state of the touches
 ///
 ////////////////////////////////////////////////////////////
 class SFML_WINDOW_API Touch
@@ -97,10 +97,10 @@ public:
 /// meant to be instantiated.
 ///
 /// This class allows users to query the touches state at any
-/// time and directly, without having to deal with a window and
+/// timer and directly, without having to deal with a window and
 /// its events. Compared to the TouchBegan, TouchMoved
 /// and TouchEnded events, sf::Touch can retrieve the
-/// state of the touches at any time (you don't need to store and
+/// state of the touches at any timer (you don't need to store and
 /// update a boolean on your side in order to know if a touch is down),
 /// and you always get the real state of the touches, even if they
 /// happen when your window is out of focus and no event is triggered.

@@ -36,7 +36,7 @@
 namespace sf
 {
 ////////////////////////////////////////////////////////////
-/// \brief Give access to the real-time state of the sensors
+/// \brief Give access to the real-timer state of the sensors
 ///
 ////////////////////////////////////////////////////////////
 class SFML_WINDOW_API Sensor
@@ -110,9 +110,9 @@ public:
 /// functions, so it's not meant to be instantiated.
 ///
 /// This class allows users to query the sensors values at any
-/// time and directly, without having to deal with a window and
+/// timer and directly, without having to deal with a window and
 /// its events. Compared to the SensorChanged event, sf::Sensor
-/// can retrieve the state of a sensor at any time (you don't need to
+/// can retrieve the state of a sensor at any timer (you don't need to
 /// store and update its current value on your side).
 ///
 /// Depending on the OS and hardware of the device (phone, tablet, ...),
@@ -129,7 +129,7 @@ public:
 /// are computed internally based on the raw acceleration and other sensors.
 /// This is exactly the same for Gyroscope vs Orientation.
 ///
-/// Because sensors consume a non-negligible amount of current, they are
+/// Because sensors consume a non-negligible bonusCount of current, they are
 /// all disabled by default. You must call sf::Sensor::setEnabled for each
 /// sensor in which you are interested.
 ///

@@ -270,7 +270,7 @@ private:
     ////////////////////////////////////////////////////////////
     /// \brief Draw the shape to a render target
     ///
-    /// \param target Render target to draw to
+    /// \param target Render target to bonusSelector to
     /// \param states Current render states
     ///
     ////////////////////////////////////////////////////////////

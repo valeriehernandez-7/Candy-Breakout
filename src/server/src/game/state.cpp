@@ -1,8 +1,8 @@
 #include "game/game.h"
 #include "game/state.h"
 
-#include <iostream>
 #include <cstdlib>
+#include <iostream>
 
 using namespace std;
 using namespace sf;
@@ -53,8 +53,7 @@ void InitialState::display(RenderWindow &window) {
 
 /////// PlayState ///////
 
-PlayState::PlayState(Game *game) : State(game), ballStatus{false}, playerScore{0}, playerMotion{3}, playerHealth{3},
-                                   playerSpeed{8}, timer{0} {
+PlayState::PlayState(Game *game) : State(game), ballStatus{false}, playerScore{0}, playerMotion{5}, playerHealth{3}, playerSpeed{8}, timer{0} {
     levelImage.loadFromFile("resources/level/l-" + to_string(getGameState().getLevel()) + ".png");
     textures[tBall].loadFromFile("resources/assets/i_ball.png");
     textures[tBallPlus].loadFromFile("resources/assets/i_ball-plus.png");
@@ -73,7 +72,8 @@ PlayState::PlayState(Game *game) : State(game), ballStatus{false}, playerScore{0
     balls.push_back(textures[tBall]);
 
     player.setTexture(textures[tPlayer]);
-    player.setPosition(135, 360);
+    player.setOrigin(player.getTexture()->getSize().x / 2, player.getTexture()->getSize().y / 2);
+    player.setPosition(165, 360);
 
     playerHealthMeter.setPosition(25, 385);
 
@@ -93,13 +93,14 @@ PlayState::PlayState(Game *game) : State(game), ballStatus{false}, playerScore{0
 PlayState::~PlayState() {}
 
 void PlayState::update(Clock &clock) {
+    // player info
     textures[tPlayerHealth].loadFromFile("resources/assets/i_life-" + to_string(playerHealth) + ".png");
     playerHealthMeter.setTexture(textures[tPlayerHealth]);
     txtPlayerScore.setString(to_string(playerScore));
 
     // player motion zone
     if (playerMotion == 1) {
-        if (player.getPosition().x > 15) {
+        if (player.getPosition().x > 15 + player.getGlobalBounds().width / 2) {
             player.move(-playerSpeed, 0);
             if (!ballStatus) {
                 for (unsigned b = 0; b < balls.size(); b++) {
@@ -109,7 +110,7 @@ void PlayState::update(Clock &clock) {
         }
     }
     if (playerMotion == 2) {
-        if (player.getPosition().x + player.getGlobalBounds().width < 315) {
+        if (player.getPosition().x < 315 - player.getGlobalBounds().width / 2) {
             player.move(playerSpeed, 0);
             if (!ballStatus) {
                 for (unsigned b = 0; b < balls.size(); b++) {
@@ -117,6 +118,12 @@ void PlayState::update(Clock &clock) {
                 }
             }
         }
+    }
+    if (playerMotion == 3 && ballStatus) {
+        player.rotate(-10);
+    }
+    if (playerMotion == 4 && ballStatus) {
+        player.rotate(10);
     }
 
     // ball (Y) motion
@@ -193,7 +200,7 @@ void PlayState::update(Clock &clock) {
                 getGameState().totalScore += playerScore;
                 getGameState().setState(State::final);
             } else if (playerHealth-- > 0) {
-                bonus.bonusDismiss(player, playerSpeed, textures); // dismiss bonus
+                bonus.bonusDismiss(player, playerSpeed, candies, textures); // dismiss bonus
                 ballGenerator();
             }
         }
@@ -212,11 +219,13 @@ void PlayState::update(Clock &clock) {
             else if (onCollision(candies[i].sprite, player)) {
                 candies.erase(candies.begin() + i);
                 bonus.bonusSelector();
-                bonus.bonusManager(player, playerSpeed, playerHealth, balls, textures);
+                bonus.bonusManager(player, playerSpeed, playerHealth, balls, candies, textures);
                 if (bonus.bonusType == "health") {
                     bonusInfo.setString("    1UP  ");
                 } else if (bonus.bonusType == "balls") {
                     bonusInfo.setString("+ BALLS");
+                } else if (bonus.bonusType == "super_ball") {
+                    bonusInfo.setString("* BALL *");
                 } else if (bonus.bonusType == "ball+Speed") {
                     bonusInfo.setString("+B SPEED");
                 } else if (bonus.bonusType == "ball-Speed") {
@@ -257,13 +266,13 @@ void PlayState::update(Clock &clock) {
 
 void PlayState::display(RenderWindow &window) {
     window.draw(backgroundImage);
-    for (auto a: candies) {
-        window.draw(a.sprite);
+    for (auto c: candies) {
+        window.draw(c.sprite);
     }
     window.draw(bonusInfo);
     window.draw(player);
-    for (auto a: balls) {
-        window.draw(a);
+    for (auto b: balls) {
+        window.draw(b);
     }
     window.draw(playerHealthMeter);
     window.draw(txtPlayerScore);
@@ -272,13 +281,22 @@ void PlayState::display(RenderWindow &window) {
 void PlayState::handler(Event &e) {
     if (e.type == Event::KeyPressed) {
         if (!ballStatus) {
-            if (e.key.code == Keyboard::Up)
+            if (e.key.code == Keyboard::Up) {
                 ballRelease();
+            }
         }
-        if (e.key.code == Keyboard::Left)
+        if (e.key.code == Keyboard::Left) {
             playerMotion = 1;
-        if (e.key.code == Keyboard::Right)
+        }
+        if (e.key.code == Keyboard::Right) {
             playerMotion = 2;
+        }
+        if (e.key.code == Keyboard::A) {
+            playerMotion = 3;
+        }
+        if (e.key.code == Keyboard::D) {
+            playerMotion = 4;
+        }
         if (e.key.code == Keyboard::Escape) {
             getGameState().gameClosed = true;
             getGameState().totalScore += playerScore;
@@ -286,10 +304,13 @@ void PlayState::handler(Event &e) {
         }
     }
     if (e.type == Event::KeyReleased) {
-        if (e.key.code == Keyboard::Left)
+        if (e.key.code == Keyboard::Left || e.key.code == Keyboard::Right) {
             playerMotion = 0;
-        if (e.key.code == Keyboard::Right)
+        }
+        if (e.key.code == Keyboard::A || e.key.code == Keyboard::D) {
+            player.setRotation(0);
             playerMotion = 0;
+        }
     }
 }
 
@@ -328,9 +349,8 @@ void PlayState::levelGenerator() {
 void PlayState::ballGenerator() {
     balls[0].offset.x = 0;
     balls[0].offset.y = 0;
-    balls[0].setPosition(
-            (player.getPosition().x + (player.getGlobalBounds().width / 2)) - balls[0].getGlobalBounds().width / 2,
-            360 - balls[0].getGlobalBounds().height);
+    balls[0].setTexture(textures[tBall]);
+    balls[0].setPosition(player.getPosition().x - balls[0].getTexture()->getSize().x / 2, player.getPosition().y - balls[0].getTexture()->getSize().y / 2);
     ballStatus = false;
 }
 
@@ -343,7 +363,8 @@ void PlayState::ballRelease() {
 }
 
 void PlayState::bonusGenerator() {
-    for (int i = 0; i < bonus.bonusCount; i++) {
+    int bonusTotal = rand() % bonus.bonusCount;
+    for (int i = 0; i < bonusTotal; i++) {
         int randIndex = rand() % candies.size();
         if (candies[randIndex].bonus) {
             randIndex = rand() % candies.size();
@@ -356,6 +377,13 @@ void PlayState::candyManager(vector<Candy> &candies, unsigned &id) {
     candies[id].resistance--;
     if (candies[id].resistance == 0) {
         playerScore += candies[id].points;
+        if (!candies[id].bonus) {
+            candies.erase(candies.begin() + id);
+        }
+    }
+    if (candies[id].special && candies.size() > 0) {
+        candies[id].resistance = 0;
+        playerScore += 30;
         if (!candies[id].bonus) {
             candies.erase(candies.begin() + id);
         }
@@ -375,13 +403,13 @@ LoadState::LoadState(Game *game) : State{game}, timer{3} {
     txtTimer.setFont(getGameState().getFont());
     txtTimer.setCharacterSize(120);
     txtTimer.setOutlineThickness(3);
-    txtTimer.setOutlineColor(Color(89,42,30));
+    txtTimer.setOutlineColor(Color(89, 42, 30));
     txtTimer.setPosition(140, 50);
 
     txtKey.setFont(getGameState().getFont());
-    txtKey.setCharacterSize(15);
-    txtKey.setString("         [P] - Pause\n    [UP] - Ball Release\n[LEFT] & [RIGHT] - Move\n         [ESC] - Quit");
-    txtKey.setPosition(376, 285);
+    txtKey.setCharacterSize(14);
+    txtKey.setString("          [P] - Pause\n     [UP] - Ball Release\n[LEFT] & [RIGHT] - Move\n     [A] & [D] - Rotate\n          [ESC] - Quit");
+    txtKey.setPosition(385, 280);
 }
 
 LoadState::~LoadState() {}
@@ -428,7 +456,7 @@ OverState::OverState(Game *game) : State{game} {
     txtFinalScore.setFont(getGameState().getFont());
     txtFinalScore.setCharacterSize(60);
     txtFinalScore.setOutlineThickness(2);
-    txtFinalScore.setOutlineColor(Color(27,20,100));
+    txtFinalScore.setOutlineColor(Color(27, 20, 100));
     txtFinalScore.setPosition(85, 30);
 
 }
