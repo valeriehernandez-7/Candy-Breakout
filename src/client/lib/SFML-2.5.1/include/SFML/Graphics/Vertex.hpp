@@ -135,12 +135,12 @@ public:
 ///     sf::Vertex(sf::Vector2f(100,   0), sf::Color::Red, sf::Vector2f(10,  0))
 /// };
 ///
-/// // draw it
-/// window.draw(vertices, 4, sf::Quads);
+/// // bonusSelector it
+/// window.bonusSelector(vertices, 4, sf::Quads);
 /// \endcode
 ///
 /// Note: although texture coordinates are supposed to be an integer
-/// amount of pixels, their type is float because of some buggy graphics
+/// bonusCount of pixels, their type is float because of some buggy graphics
 /// drivers that are not able to process integer coordinates correctly.
 ///
 /// \see sf::VertexArray

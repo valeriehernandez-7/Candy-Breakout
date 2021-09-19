@@ -208,7 +208,7 @@ public:
     ///
     /// This function adds to the current position of the object,
     /// unlike setPosition which overwrites it.
-    /// Thus, it is equivalent to the following code:
+    /// Thus, it is equivalent to the following playerMotion:
     /// \code
     /// sf::Vector2f pos = object.getPosition();
     /// object.setPosition(pos.x + offsetX, pos.y + offsetY);
@@ -227,7 +227,7 @@ public:
     ///
     /// This function adds to the current position of the object,
     /// unlike setPosition which overwrites it.
-    /// Thus, it is equivalent to the following code:
+    /// Thus, it is equivalent to the following playerMotion:
     /// \code
     /// object.setPosition(object.getPosition() + offset);
     /// \endcode
@@ -244,7 +244,7 @@ public:
     ///
     /// This function adds to the current rotation of the object,
     /// unlike setRotation which overwrites it.
-    /// Thus, it is equivalent to the following code:
+    /// Thus, it is equivalent to the following playerMotion:
     /// \code
     /// object.setRotation(object.getRotation() + angle);
     /// \endcode
@@ -259,7 +259,7 @@ public:
     ///
     /// This function multiplies the current scale of the object,
     /// unlike setScale which overwrites it.
-    /// Thus, it is equivalent to the following code:
+    /// Thus, it is equivalent to the following playerMotion:
     /// \code
     /// sf::Vector2f scale = object.getScale();
     /// object.setScale(scale.x * factorX, scale.y * factorY);
@@ -278,7 +278,7 @@ public:
     ///
     /// This function multiplies the current scale of the object,
     /// unlike setScale which overwrites it.
-    /// Thus, it is equivalent to the following code:
+    /// Thus, it is equivalent to the following playerMotion:
     /// \code
     /// sf::Vector2f scale = object.getScale();
     /// object.setScale(scale.x * factor.x, scale.y * factor.y);
@@ -377,17 +377,17 @@ private:
 /// \code
 /// class MyEntity : public sf::Transformable, public sf::Drawable
 /// {
-///     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const
+///     virtual void bonusSelector(sf::RenderTarget& target, sf::RenderStates states) const
 ///     {
 ///         states.transform *= getTransform();
-///         target.draw(..., states);
+///         target.bonusSelector(..., states);
 ///     }
 /// };
 ///
 /// MyEntity entity;
 /// entity.setPosition(10, 20);
 /// entity.setRotation(45);
-/// window.draw(entity);
+/// window.bonusSelector(entity);
 /// \endcode
 ///
 /// It can also be used as a member, if you don't want to use
@@ -404,7 +404,7 @@ private:
 ///
 ///     void Draw(sf::RenderTarget& target) const
 ///     {
-///         target.draw(..., myTransform.getTransform());
+///         target.bonusSelector(..., myTransform.getTransform());
 ///     }
 ///
 /// private:

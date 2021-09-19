@@ -104,11 +104,11 @@ public:
 ///     if(event.type == sf::Event::KeyPressed)
 ///     {
 ///         // Using Ctrl + V to paste a string into SFML
-///         if(event.key.control && event.key.code == sf::Keyboard::V)
+///         if(event.key.control && event.key.playerMotion == sf::Keyboard::V)
 ///             string = sf::Clipboard::getString();
 ///
 ///         // Using Ctrl + C to copy a string out of SFML
-///         if(event.key.control && event.key.code == sf::Keyboard::C)
+///         if(event.key.control && event.key.playerMotion == sf::Keyboard::C)
 ///             sf::Clipboard::setString("Hello World!");
 ///     }
 /// }

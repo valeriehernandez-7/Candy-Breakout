@@ -163,7 +163,7 @@ SFML_GRAPHICS_API extern const BlendMode BlendNone;     ///< Overwrite dest with
 /// \ingroup graphics
 ///
 /// sf::BlendMode is a class that represents a blend mode. A blend
-/// mode determines how the colors of an object you draw are
+/// mode determines how the colors of an object you bonusSelector are
 /// mixed with the colors that are already in the buffer.
 ///
 /// The class is composed of 6 components, each of which has its
@@ -206,9 +206,9 @@ SFML_GRAPHICS_API extern const BlendMode BlendNone;     ///< Overwrite dest with
 /// sf::BlendMode noBlending             = sf::BlendNone;
 /// \endcode
 ///
-/// In SFML, a blend mode can be specified every time you draw a sf::Drawable
+/// In SFML, a blend mode can be specified every timer you bonusSelector a sf::Drawable
 /// object to a render target. It is part of the sf::RenderStates compound
-/// that is passed to the member function sf::RenderTarget::draw().
+/// that is passed to the member function sf::RenderTarget::bonusSelector().
 ///
 /// \see sf::RenderStates, sf::RenderTarget
 ///

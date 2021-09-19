@@ -140,7 +140,7 @@ public:
     /// This function starts the entry point passed to the
     /// thread's constructor, and returns immediately.
     /// After this function returns, the thread's function is
-    /// running in parallel to the calling code.
+    /// running in parallel to the calling playerMotion.
     ///
     ////////////////////////////////////////////////////////////
     void launch();
@@ -201,13 +201,13 @@ private:
 /// \class sf::Thread
 /// \ingroup system
 ///
-/// Threads provide a way to run multiple parts of the code
+/// Threads provide a way to run multiple parts of the playerMotion
 /// in parallel. When you launch a new thread, the execution
 /// is split and both the new thread and the caller run
 /// in parallel.
 ///
 /// To use a sf::Thread, you construct it directly with the
-/// function to execute as the entry point of the thread.
+/// function to bonusManager as the entry point of the thread.
 /// sf::Thread has multiple template constructors, which means
 /// that you can use several types of entry points:
 /// \li non-member functions with no argument
@@ -274,7 +274,7 @@ private:
 /// Creating parallel threads of execution can be dangerous:
 /// all threads inside the same process share the same memory space,
 /// which means that you may end up accessing the same variable
-/// from multiple threads at the same time. To prevent this
+/// from multiple threads at the same timer. To prevent this
 /// kind of situations, you can use mutexes (see sf::Mutex).
 ///
 /// \see sf::Mutex

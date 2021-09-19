@@ -107,12 +107,12 @@ private:
 /// } // mutex is unlocked
 /// \endcode
 ///
-/// Because the mutex is not explicitly unlocked in the code,
+/// Because the mutex is not explicitly unlocked in the playerMotion,
 /// it may remain locked longer than needed. If the region
-/// of the code that needs to be protected by the mutex is
+/// of the playerMotion that needs to be protected by the mutex is
 /// not the entire function, a good practice is to create a
 /// smaller, inner scope so that the lock is limited to this
-/// part of the code.
+/// part of the playerMotion.
 ///
 /// \code
 /// sf::Mutex mutex;

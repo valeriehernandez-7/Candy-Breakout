@@ -34,7 +34,7 @@
 namespace sf
 {
 ////////////////////////////////////////////////////////////
-/// \brief Represents a time value
+/// \brief Represents a timer value
 ///
 ////////////////////////////////////////////////////////////
 class SFML_SYSTEM_API Time
@@ -44,13 +44,13 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Default constructor
     ///
-    /// Sets the time value to zero.
+    /// Sets the timer value to zero.
     ///
     ////////////////////////////////////////////////////////////
     Time();
 
     ////////////////////////////////////////////////////////////
-    /// \brief Return the time value as a number of seconds
+    /// \brief Return the timer value as a number of seconds
     ///
     /// \return Time in seconds
     ///
@@ -60,7 +60,7 @@ public:
     float asSeconds() const;
 
     ////////////////////////////////////////////////////////////
-    /// \brief Return the time value as a number of milliseconds
+    /// \brief Return the timer value as a number of milliseconds
     ///
     /// \return Time in milliseconds
     ///
@@ -70,7 +70,7 @@ public:
     Int32 asMilliseconds() const;
 
     ////////////////////////////////////////////////////////////
-    /// \brief Return the time value as a number of microseconds
+    /// \brief Return the timer value as a number of microseconds
     ///
     /// \return Time in microseconds
     ///
@@ -82,7 +82,7 @@ public:
     ////////////////////////////////////////////////////////////
     // Static member data
     ////////////////////////////////////////////////////////////
-    static const Time Zero; ///< Predefined "zero" time value
+    static const Time Zero; ///< Predefined "zero" timer value
 
 private:
 
@@ -93,7 +93,7 @@ private:
     ////////////////////////////////////////////////////////////
     /// \brief Construct from a number of microseconds
     ///
-    /// This function is internal. To construct time values,
+    /// This function is internal. To construct timer values,
     /// use sf::seconds, sf::milliseconds or sf::microseconds instead.
     ///
     /// \param microseconds Number of microseconds
@@ -111,11 +111,11 @@ private:
 
 ////////////////////////////////////////////////////////////
 /// \relates Time
-/// \brief Construct a time value from a number of seconds
+/// \brief Construct a timer value from a number of seconds
 ///
 /// \param amount Number of seconds
 ///
-/// \return Time value constructed from the amount of seconds
+/// \return Time value constructed from the bonusCount of seconds
 ///
 /// \see milliseconds, microseconds
 ///
@@ -124,11 +124,11 @@ SFML_SYSTEM_API Time seconds(float amount);
 
 ////////////////////////////////////////////////////////////
 /// \relates Time
-/// \brief Construct a time value from a number of milliseconds
+/// \brief Construct a timer value from a number of milliseconds
 ///
 /// \param amount Number of milliseconds
 ///
-/// \return Time value constructed from the amount of milliseconds
+/// \return Time value constructed from the bonusCount of milliseconds
 ///
 /// \see seconds, microseconds
 ///
@@ -137,11 +137,11 @@ SFML_SYSTEM_API Time milliseconds(Int32 amount);
 
 ////////////////////////////////////////////////////////////
 /// \relates Time
-/// \brief Construct a time value from a number of microseconds
+/// \brief Construct a timer value from a number of microseconds
 ///
 /// \param amount Number of microseconds
 ///
-/// \return Time value constructed from the amount of microseconds
+/// \return Time value constructed from the bonusCount of microseconds
 ///
 /// \see seconds, milliseconds
 ///
@@ -150,34 +150,34 @@ SFML_SYSTEM_API Time microseconds(Int64 amount);
 
 ////////////////////////////////////////////////////////////
 /// \relates Time
-/// \brief Overload of == operator to compare two time values
+/// \brief Overload of == operator to compare two timer values
 ///
-/// \param left  Left operand (a time)
-/// \param right Right operand (a time)
+/// \param left  Left operand (a timer)
+/// \param right Right operand (a timer)
 ///
-/// \return True if both time values are equal
+/// \return True if both timer values are equal
 ///
 ////////////////////////////////////////////////////////////
 SFML_SYSTEM_API bool operator ==(Time left, Time right);
 
 ////////////////////////////////////////////////////////////
 /// \relates Time
-/// \brief Overload of != operator to compare two time values
+/// \brief Overload of != operator to compare two timer values
 ///
-/// \param left  Left operand (a time)
-/// \param right Right operand (a time)
+/// \param left  Left operand (a timer)
+/// \param right Right operand (a timer)
 ///
-/// \return True if both time values are different
+/// \return True if both timer values are different
 ///
 ////////////////////////////////////////////////////////////
 SFML_SYSTEM_API bool operator !=(Time left, Time right);
 
 ////////////////////////////////////////////////////////////
 /// \relates Time
-/// \brief Overload of < operator to compare two time values
+/// \brief Overload of < operator to compare two timer values
 ///
-/// \param left  Left operand (a time)
-/// \param right Right operand (a time)
+/// \param left  Left operand (a timer)
+/// \param right Right operand (a timer)
 ///
 /// \return True if \a left is lesser than \a right
 ///
@@ -186,10 +186,10 @@ SFML_SYSTEM_API bool operator <(Time left, Time right);
 
 ////////////////////////////////////////////////////////////
 /// \relates Time
-/// \brief Overload of > operator to compare two time values
+/// \brief Overload of > operator to compare two timer values
 ///
-/// \param left  Left operand (a time)
-/// \param right Right operand (a time)
+/// \param left  Left operand (a timer)
+/// \param right Right operand (a timer)
 ///
 /// \return True if \a left is greater than \a right
 ///
@@ -198,10 +198,10 @@ SFML_SYSTEM_API bool operator >(Time left, Time right);
 
 ////////////////////////////////////////////////////////////
 /// \relates Time
-/// \brief Overload of <= operator to compare two time values
+/// \brief Overload of <= operator to compare two timer values
 ///
-/// \param left  Left operand (a time)
-/// \param right Right operand (a time)
+/// \param left  Left operand (a timer)
+/// \param right Right operand (a timer)
 ///
 /// \return True if \a left is lesser or equal than \a right
 ///
@@ -210,10 +210,10 @@ SFML_SYSTEM_API bool operator <=(Time left, Time right);
 
 ////////////////////////////////////////////////////////////
 /// \relates Time
-/// \brief Overload of >= operator to compare two time values
+/// \brief Overload of >= operator to compare two timer values
 ///
-/// \param left  Left operand (a time)
-/// \param right Right operand (a time)
+/// \param left  Left operand (a timer)
+/// \param right Right operand (a timer)
 ///
 /// \return True if \a left is greater or equal than \a right
 ///
@@ -222,21 +222,21 @@ SFML_SYSTEM_API bool operator >=(Time left, Time right);
 
 ////////////////////////////////////////////////////////////
 /// \relates Time
-/// \brief Overload of unary - operator to negate a time value
+/// \brief Overload of unary - operator to negate a timer value
 ///
-/// \param right Right operand (a time)
+/// \param right Right operand (a timer)
 ///
-/// \return Opposite of the time value
+/// \return Opposite of the timer value
 ///
 ////////////////////////////////////////////////////////////
 SFML_SYSTEM_API Time operator -(Time right);
 
 ////////////////////////////////////////////////////////////
 /// \relates Time
-/// \brief Overload of binary + operator to add two time values
+/// \brief Overload of binary + operator to add two timer values
 ///
-/// \param left  Left operand (a time)
-/// \param right Right operand (a time)
+/// \param left  Left operand (a timer)
+/// \param right Right operand (a timer)
 ///
 /// \return Sum of the two times values
 ///
@@ -245,10 +245,10 @@ SFML_SYSTEM_API Time operator +(Time left, Time right);
 
 ////////////////////////////////////////////////////////////
 /// \relates Time
-/// \brief Overload of binary += operator to add/assign two time values
+/// \brief Overload of binary += operator to add/assign two timer values
 ///
-/// \param left  Left operand (a time)
-/// \param right Right operand (a time)
+/// \param left  Left operand (a timer)
+/// \param right Right operand (a timer)
 ///
 /// \return Sum of the two times values
 ///
@@ -257,10 +257,10 @@ SFML_SYSTEM_API Time& operator +=(Time& left, Time right);
 
 ////////////////////////////////////////////////////////////
 /// \relates Time
-/// \brief Overload of binary - operator to subtract two time values
+/// \brief Overload of binary - operator to subtract two timer values
 ///
-/// \param left  Left operand (a time)
-/// \param right Right operand (a time)
+/// \param left  Left operand (a timer)
+/// \param right Right operand (a timer)
 ///
 /// \return Difference of the two times values
 ///
@@ -269,10 +269,10 @@ SFML_SYSTEM_API Time operator -(Time left, Time right);
 
 ////////////////////////////////////////////////////////////
 /// \relates Time
-/// \brief Overload of binary -= operator to subtract/assign two time values
+/// \brief Overload of binary -= operator to subtract/assign two timer values
 ///
-/// \param left  Left operand (a time)
-/// \param right Right operand (a time)
+/// \param left  Left operand (a timer)
+/// \param right Right operand (a timer)
 ///
 /// \return Difference of the two times values
 ///
@@ -281,9 +281,9 @@ SFML_SYSTEM_API Time& operator -=(Time& left, Time right);
 
 ////////////////////////////////////////////////////////////
 /// \relates Time
-/// \brief Overload of binary * operator to scale a time value
+/// \brief Overload of binary * operator to scale a timer value
 ///
-/// \param left  Left operand (a time)
+/// \param left  Left operand (a timer)
 /// \param right Right operand (a number)
 ///
 /// \return \a left multiplied by \a right
@@ -293,9 +293,9 @@ SFML_SYSTEM_API Time operator *(Time left, float right);
 
 ////////////////////////////////////////////////////////////
 /// \relates Time
-/// \brief Overload of binary * operator to scale a time value
+/// \brief Overload of binary * operator to scale a timer value
 ///
-/// \param left  Left operand (a time)
+/// \param left  Left operand (a timer)
 /// \param right Right operand (a number)
 ///
 /// \return \a left multiplied by \a right
@@ -305,10 +305,10 @@ SFML_SYSTEM_API Time operator *(Time left, Int64 right);
 
 ////////////////////////////////////////////////////////////
 /// \relates Time
-/// \brief Overload of binary * operator to scale a time value
+/// \brief Overload of binary * operator to scale a timer value
 ///
 /// \param left  Left operand (a number)
-/// \param right Right operand (a time)
+/// \param right Right operand (a timer)
 ///
 /// \return \a left multiplied by \a right
 ///
@@ -317,10 +317,10 @@ SFML_SYSTEM_API Time operator *(float left, Time right);
 
 ////////////////////////////////////////////////////////////
 /// \relates Time
-/// \brief Overload of binary * operator to scale a time value
+/// \brief Overload of binary * operator to scale a timer value
 ///
 /// \param left  Left operand (a number)
-/// \param right Right operand (a time)
+/// \param right Right operand (a timer)
 ///
 /// \return \a left multiplied by \a right
 ///
@@ -329,9 +329,9 @@ SFML_SYSTEM_API Time operator *(Int64 left, Time right);
 
 ////////////////////////////////////////////////////////////
 /// \relates Time
-/// \brief Overload of binary *= operator to scale/assign a time value
+/// \brief Overload of binary *= operator to scale/assign a timer value
 ///
-/// \param left  Left operand (a time)
+/// \param left  Left operand (a timer)
 /// \param right Right operand (a number)
 ///
 /// \return \a left multiplied by \a right
@@ -341,9 +341,9 @@ SFML_SYSTEM_API Time& operator *=(Time& left, float right);
 
 ////////////////////////////////////////////////////////////
 /// \relates Time
-/// \brief Overload of binary *= operator to scale/assign a time value
+/// \brief Overload of binary *= operator to scale/assign a timer value
 ///
-/// \param left  Left operand (a time)
+/// \param left  Left operand (a timer)
 /// \param right Right operand (a number)
 ///
 /// \return \a left multiplied by \a right
@@ -353,9 +353,9 @@ SFML_SYSTEM_API Time& operator *=(Time& left, Int64 right);
 
 ////////////////////////////////////////////////////////////
 /// \relates Time
-/// \brief Overload of binary / operator to scale a time value
+/// \brief Overload of binary / operator to scale a timer value
 ///
-/// \param left  Left operand (a time)
+/// \param left  Left operand (a timer)
 /// \param right Right operand (a number)
 ///
 /// \return \a left divided by \a right
@@ -365,9 +365,9 @@ SFML_SYSTEM_API Time operator /(Time left, float right);
 
 ////////////////////////////////////////////////////////////
 /// \relates Time
-/// \brief Overload of binary / operator to scale a time value
+/// \brief Overload of binary / operator to scale a timer value
 ///
-/// \param left  Left operand (a time)
+/// \param left  Left operand (a timer)
 /// \param right Right operand (a number)
 ///
 /// \return \a left divided by \a right
@@ -377,9 +377,9 @@ SFML_SYSTEM_API Time operator /(Time left, Int64 right);
 
 ////////////////////////////////////////////////////////////
 /// \relates Time
-/// \brief Overload of binary /= operator to scale/assign a time value
+/// \brief Overload of binary /= operator to scale/assign a timer value
 ///
-/// \param left  Left operand (a time)
+/// \param left  Left operand (a timer)
 /// \param right Right operand (a number)
 ///
 /// \return \a left divided by \a right
@@ -389,9 +389,9 @@ SFML_SYSTEM_API Time& operator /=(Time& left, float right);
 
 ////////////////////////////////////////////////////////////
 /// \relates Time
-/// \brief Overload of binary /= operator to scale/assign a time value
+/// \brief Overload of binary /= operator to scale/assign a timer value
 ///
-/// \param left  Left operand (a time)
+/// \param left  Left operand (a timer)
 /// \param right Right operand (a number)
 ///
 /// \return \a left divided by \a right
@@ -401,10 +401,10 @@ SFML_SYSTEM_API Time& operator /=(Time& left, Int64 right);
 
 ////////////////////////////////////////////////////////////
 /// \relates Time
-/// \brief Overload of binary / operator to compute the ratio of two time values
+/// \brief Overload of binary / operator to compute the ratio of two timer values
 ///
-/// \param left  Left operand (a time)
-/// \param right Right operand (a time)
+/// \param left  Left operand (a timer)
+/// \param right Right operand (a timer)
 ///
 /// \return \a left divided by \a right
 ///
@@ -413,10 +413,10 @@ SFML_SYSTEM_API float operator /(Time left, Time right);
 
 ////////////////////////////////////////////////////////////
 /// \relates Time
-/// \brief Overload of binary % operator to compute remainder of a time value
+/// \brief Overload of binary % operator to compute remainder of a timer value
 ///
-/// \param left  Left operand (a time)
-/// \param right Right operand (a time)
+/// \param left  Left operand (a timer)
+/// \param right Right operand (a timer)
 ///
 /// \return \a left modulo \a right
 ///
@@ -425,10 +425,10 @@ SFML_SYSTEM_API Time operator %(Time left, Time right);
 
 ////////////////////////////////////////////////////////////
 /// \relates Time
-/// \brief Overload of binary %= operator to compute/assign remainder of a time value
+/// \brief Overload of binary %= operator to compute/assign remainder of a timer value
 ///
-/// \param left  Left operand (a time)
-/// \param right Right operand (a time)
+/// \param left  Left operand (a timer)
+/// \param right Right operand (a timer)
 ///
 /// \return \a left modulo \a right
 ///
@@ -445,21 +445,21 @@ SFML_SYSTEM_API Time& operator %=(Time& left, Time right);
 /// \class sf::Time
 /// \ingroup system
 ///
-/// sf::Time encapsulates a time value in a flexible way.
-/// It allows to define a time value either as a number of
+/// sf::Time encapsulates a timer value in a flexible way.
+/// It allows to define a timer value either as a number of
 /// seconds, milliseconds or microseconds. It also works the
-/// other way round: you can read a time value as either
+/// other way round: you can read a timer value as either
 /// a number of seconds, milliseconds or microseconds.
 ///
 /// By using such a flexible interface, the API doesn't
-/// impose any fixed type or resolution for time values,
+/// impose any fixed type or resolution for timer values,
 /// and let the user choose its own favorite representation.
 ///
 /// Time values support the usual mathematical operations:
 /// you can add or subtract two times, multiply or divide
-/// a time by a number, compare two times, etc.
+/// a timer by a number, compare two times, etc.
 ///
-/// Since they represent a time span and not an absolute time
+/// Since they represent a timer span and not an absolute timer
 /// value, times can also be negative.
 ///
 /// Usage example:
