@@ -1,8 +1,36 @@
-#include <iostream>
+#include "communication/socketclient.h"
+#include "game/handler.h"
 
-using namespace std;
+SocketClient *player;
+Handler *handler;
+
+void *playerRun(void *) {
+    try {
+        player->connection();
+    } catch (const char *error) {
+        perror(error);
+    }
+    pthread_exit(nullptr);
+}
 
 int main() {
-    cout << "CANDY BREAKOUT" << endl;
-    return 0;
+    player = new SocketClient;
+    pthread_t threadPlayer;
+    pthread_create(&threadPlayer, nullptr, playerRun, nullptr);
+    pthread_detach(threadPlayer);
+
+    while (player) {
+        string key;
+        key = handler->keyManager();
+
+        if (key == "<Escape>") {
+            player->sendData(key.c_str());
+            pthread_exit(nullptr);
+        }
+
+        player->sendData(key.c_str());
+    }
+
+    delete player;
+    exit(EXIT_SUCCESS);
 }

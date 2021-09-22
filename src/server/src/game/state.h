@@ -34,7 +34,7 @@ public:
 
     Texture textures[12];
     enum {
-        tBall, tBallPlus, 
+        tBall, tBallPlus,
         tPlayer, tPlayerPlus, tPlayerJunior, tPlayerHealth,
         tCandySingle, tCandyDouble, tCandyTriple, tCandyDeep, tBonus,
         tGameScreen
@@ -44,7 +44,7 @@ public:
 
     virtual void display(RenderWindow &window);
 
-    virtual void handler(Event &event);
+    virtual void handler(Event &event, string &key);
 
 private:
     Game *gameState;
@@ -79,7 +79,7 @@ public:
 
     void display(RenderWindow &window) override;
 
-    void handler(Event &e) override;
+    void handler(Event &event, string &key) override;
 
     friend struct Bonus;
 

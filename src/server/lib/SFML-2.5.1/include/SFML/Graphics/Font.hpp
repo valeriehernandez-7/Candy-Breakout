@@ -169,7 +169,7 @@ public:
     /// Be aware that using a negative value for the outline
     /// thickness will cause distorted rendering.
     ///
-    /// \param codePoint        Unicode playerMotion point of the character to get
+    /// \param codePoint        Unicode code point of the character to get
     /// \param characterSize    Reference character size
     /// \param bold             Retrieve the bold version or the regular one?
     /// \param outlineThickness Thickness of outline (when != 0 the glyph will not be filled)
@@ -188,8 +188,8 @@ public:
     /// closer than other characters. Most of the glyphs pairs have a
     /// kerning offset of zero, though.
     ///
-    /// \param first         Unicode playerMotion point of the first character
-    /// \param second        Unicode playerMotion point of the second character
+    /// \param first         Unicode code point of the first character
+    /// \param second        Unicode code point of the second character
     /// \param characterSize Reference character size
     ///
     /// \return Kerning value for \a first and \a second, in pixels
@@ -291,7 +291,7 @@ private:
     {
         Page();
 
-        GlyphTable       glyphs;  ///< Table mapping playerMotion points to their corresponding glyph
+        GlyphTable       glyphs;  ///< Table mapping code points to their corresponding glyph
         Texture          texture; ///< Texture containing the pixels of the glyphs
         unsigned int     nextRow; ///< Y position of the next new row in the texture
         std::vector<Row> rows;    ///< List containing the position of all the existing rows
@@ -306,7 +306,7 @@ private:
     ////////////////////////////////////////////////////////////
     /// \brief Load a new glyph and store it in the cache
     ///
-    /// \param codePoint        Unicode playerMotion point of the character to load
+    /// \param codePoint        Unicode code point of the character to load
     /// \param characterSize    Reference character size
     /// \param bold             Retrieve the bold version or the regular one?
     /// \param outlineThickness Thickness of outline (when != 0 the glyph will not be filled)
@@ -386,7 +386,7 @@ private:
 /// position, rotation, etc.
 /// This separation allows more flexibility and better performances:
 /// indeed a sf::Font is a heavy resource, and any operation on it
-/// is slow (often too slow for real-timer applications). On the other
+/// is slow (often too slow for real-time applications). On the other
 /// side, a sf::Text is a lightweight object which can combine the
 /// glyphs data and metrics of a sf::Font to display any text on a
 /// render target.

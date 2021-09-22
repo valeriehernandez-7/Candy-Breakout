@@ -230,7 +230,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Draw a drawable object to the render target
     ///
-    /// \param drawable Object to bonusSelector
+    /// \param drawable Object to draw
     /// \param states   Render states to use for drawing
     ///
     ////////////////////////////////////////////////////////////
@@ -241,7 +241,7 @@ public:
     ///
     /// \param vertices    Pointer to the vertices
     /// \param vertexCount Number of vertices in the array
-    /// \param type        Type of primitives to bonusSelector
+    /// \param type        Type of primitives to draw
     /// \param states      Render states to use for drawing
     ///
     ////////////////////////////////////////////////////////////
@@ -286,7 +286,7 @@ public:
     /// if you want to make it active on another thread you have
     /// to deactivate it on the previous thread first if it was active.
     /// Only one context can be current in a thread, so if you
-    /// want to bonusSelector OpenGL geometry to another render target
+    /// want to draw OpenGL geometry to another render target
     /// don't forget to activate it again. Activating a render
     /// target will automatically deactivate the previously active
     /// context (if any).
@@ -304,18 +304,18 @@ public:
     /// This function can be used when you mix SFML drawing
     /// and direct OpenGL rendering. Combined with popGLStates,
     /// it ensures that:
-    /// \li SFML's internal states are not messed up by your OpenGL playerMotion
+    /// \li SFML's internal states are not messed up by your OpenGL code
     /// \li your OpenGL states are not modified by a call to a SFML function
     ///
-    /// More specifically, it must be used around playerMotion that
+    /// More specifically, it must be used around code that
     /// calls Draw functions. Example:
     /// \code
-    /// // OpenGL playerMotion here...
+    /// // OpenGL code here...
     /// window.pushGLStates();
-    /// window.bonusSelector(...);
-    /// window.bonusSelector(...);
+    /// window.draw(...);
+    /// window.draw(...);
     /// window.popGLStates();
-    /// // OpenGL playerMotion here...
+    /// // OpenGL code here...
     /// \endcode
     ///
     /// Note that this function is quite expensive: it saves all the
@@ -349,18 +349,18 @@ public:
     /// This function can be used when you mix SFML drawing
     /// and direct OpenGL rendering, if you choose not to use
     /// pushGLStates/popGLStates. It makes sure that all OpenGL
-    /// states needed by SFML are set, so that subsequent bonusSelector()
+    /// states needed by SFML are set, so that subsequent draw()
     /// calls will work as expected.
     ///
     /// Example:
     /// \code
-    /// // OpenGL playerMotion here...
+    /// // OpenGL code here...
     /// glPushAttrib(...);
     /// window.resetGLStates();
-    /// window.bonusSelector(...);
-    /// window.bonusSelector(...);
+    /// window.draw(...);
+    /// window.draw(...);
     /// glPopAttrib(...);
-    /// // OpenGL playerMotion here...
+    /// // OpenGL code here...
     /// \endcode
     ///
     ////////////////////////////////////////////////////////////
@@ -435,7 +435,7 @@ private:
     ////////////////////////////////////////////////////////////
     /// \brief Draw the primitives
     ///
-    /// \param type        Type of primitives to bonusSelector
+    /// \param type        Type of primitives to draw
     /// \param firstVertex Index of the first vertex to use when drawing
     /// \param vertexCount Number of vertices to use when drawing
     ///
@@ -460,7 +460,7 @@ private:
 
         bool      enable;         ///< Is the cache enabled?
         bool      glStatesSet;    ///< Are our internal GL states set yet?
-        bool      viewChanged;    ///< Has the current view changed since last bonusSelector?
+        bool      viewChanged;    ///< Has the current view changed since last draw?
         BlendMode lastBlendMode;  ///< Cached blending mode
         Uint64    lastTextureId;  ///< Cached texture
         bool      texCoordsArrayEnabled; ///< Is GL_TEXTURE_COORD_ARRAY client state enabled?
@@ -489,7 +489,7 @@ private:
 ///
 /// sf::RenderTarget defines the common behavior of all the
 /// 2D render targets usable in the graphics module. It makes
-/// it possible to bonusSelector 2D entities like sprites, shapes, text
+/// it possible to draw 2D entities like sprites, shapes, text
 /// without using any OpenGL command directly.
 ///
 /// A sf::RenderTarget is also able to use views (sf::View),
@@ -497,7 +497,7 @@ private:
 /// scroll, rotate or zoom everything that is drawn,
 /// without having to transform every single entity. See the
 /// documentation of sf::View for more details and sample pieces of
-/// playerMotion about this class.
+/// code about this class.
 ///
 /// On top of that, render targets are still able to render direct
 /// OpenGL stuff. It is even possible to mix together OpenGL calls

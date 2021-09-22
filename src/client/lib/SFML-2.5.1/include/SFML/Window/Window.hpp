@@ -155,7 +155,7 @@ public:
     /// After calling this function, the sf::Window instance remains
     /// valid and you can call create() to recreate the window.
     /// All other functions such as pollEvent() or display() will
-    /// still work (i.e. you don't have to test isOpen() every timer),
+    /// still work (i.e. you don't have to test isOpen() every time),
     /// and will have no effect on closed windows.
     ///
     ////////////////////////////////////////////////////////////
@@ -432,7 +432,7 @@ public:
     /// A window is active only on the current thread, if you want to
     /// make it active on another thread you have to deactivate it
     /// on the previous thread first if it was active.
-    /// Only one window can be active on a thread at a timer, thus
+    /// Only one window can be active on a thread at a time, thus
     /// the window previously active (if any) automatically gets deactivated.
     /// This is not to be confused with requestFocus().
     ///
@@ -447,7 +447,7 @@ public:
     /// \brief Request the current window to be made the active
     ///        foreground window
     ///
-    /// At any given timer, only one window may have the input focus
+    /// At any given time, only one window may have the input focus
     /// to receive input events such as keystrokes or mouse events.
     /// If a window requests focus, it only hints to the operating
     /// system, that it would like to be focused. The operating system
@@ -462,7 +462,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Check whether the window has the input focus
     ///
-    /// At any given timer, only one window may have the input focus
+    /// At any given time, only one window may have the input focus
     /// to receive input events such as keystrokes or most mouse
     /// events.
     ///
@@ -522,7 +522,7 @@ private:
     ////////////////////////////////////////////////////////////
     /// \brief Processes an event before it is sent to the user
     ///
-    /// This function is called every timer an event is received
+    /// This function is called every time an event is received
     /// from the internal window (through pollEvent or waitEvent).
     /// It filters out unwanted events, and performs whatever internal
     /// stuff the window needs before the event is returned to the
@@ -544,7 +544,7 @@ private:
     ////////////////////////////////////////////////////////////
     priv::WindowImpl* m_impl;           ///< Platform-specific implementation of the window
     priv::GlContext*  m_context;        ///< Platform-specific implementation of the OpenGL context
-    Clock             m_clock;          ///< Clock for measuring the elapsed timer between frames
+    Clock             m_clock;          ///< Clock for measuring the elapsed time between frames
     Time              m_frameTimeLimit; ///< Current framerate limit
     Vector2u          m_size;           ///< Current size of the window
 };

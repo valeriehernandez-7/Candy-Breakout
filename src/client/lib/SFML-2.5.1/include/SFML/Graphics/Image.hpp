@@ -182,7 +182,7 @@ public:
     /// This function does a slow pixel copy and should not be
     /// used intensively. It can be used to prepare a complex
     /// static image from several others, but if you need this
-    /// kind of feature in real-timer you'd better use sf::RenderTexture.
+    /// kind of feature in real-time you'd better use sf::RenderTexture.
     ///
     /// If \a sourceRect is empty, the whole image is copied.
     /// If \a applyAlpha is set to true, the transparency of

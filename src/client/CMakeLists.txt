@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.20)
 project(client)
 
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_FLAGS -pthread)
 
 set(SFML_INCLUDE_DIR "lib/SFML-2.5.1/include")
 set(SFML_LIBRARY_DIR "lib/SFML-2.5.1/lib")
@@ -20,6 +21,10 @@ if(SFML_FOUND)
 endif()
 
 add_executable(client
-        src/main.cpp)
+        src/main.cpp
+        src/game/handler.cpp
+        src/game/handler.h
+        src/communication/socketclient.cpp
+        src/communication/socketclient.h)
 
 target_link_libraries(client sfml-system sfml-window sfml-graphics sfml-audio sfml-network)

@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.20)
 project(server)
 
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_FLAGS -pthread)
 
 set(SFML_INCLUDE_DIR "lib/SFML-2.5.1/include")
 set(SFML_LIBRARY_DIR "lib/SFML-2.5.1/lib")

@@ -52,7 +52,7 @@ public:
     ///
     /// If data is going to be updated once or more every frame,
     /// set the usage to Stream. If data is going to be set once
-    /// and used for a long timer without being modified, set the
+    /// and used for a long time without being modified, set the
     /// usage to Static. For everything else Dynamic should be a
     /// good compromise.
     ///
@@ -238,10 +238,10 @@ public:
     unsigned int getNativeHandle() const;
 
     ////////////////////////////////////////////////////////////
-    /// \brief Set the type of primitives to bonusSelector
+    /// \brief Set the type of primitives to draw
     ///
     /// This function defines how the vertices must be interpreted
-    /// when it's timer to bonusSelector them.
+    /// when it's time to draw them.
     ///
     /// The default primitive type is sf::Points.
     ///
@@ -288,17 +288,17 @@ public:
     ///
     /// This function is not part of the graphics API, it mustn't be
     /// used when drawing SFML entities. It must be used only if you
-    /// mix sf::VertexBuffer with OpenGL playerMotion.
+    /// mix sf::VertexBuffer with OpenGL code.
     ///
     /// \code
     /// sf::VertexBuffer vb1, vb2;
     /// ...
     /// sf::VertexBuffer::bind(&vb1);
-    /// // bonusSelector OpenGL stuff that use vb1...
+    /// // draw OpenGL stuff that use vb1...
     /// sf::VertexBuffer::bind(&vb2);
-    /// // bonusSelector OpenGL stuff that use vb2...
+    /// // draw OpenGL stuff that use vb2...
     /// sf::VertexBuffer::bind(NULL);
-    /// // bonusSelector OpenGL stuff that use no vertex buffer...
+    /// // draw OpenGL stuff that use no vertex buffer...
     /// \endcode
     ///
     /// \param vertexBuffer Pointer to the vertex buffer to bind, can be null to use no vertex buffer
@@ -323,7 +323,7 @@ private:
     ////////////////////////////////////////////////////////////
     /// \brief Draw the vertex buffer to a render target
     ///
-    /// \param target Render target to bonusSelector to
+    /// \param target Render target to draw to
     /// \param states Current render states
     ///
     ////////////////////////////////////////////////////////////
@@ -336,7 +336,7 @@ private:
     ////////////////////////////////////////////////////////////
     unsigned int  m_buffer;        ///< Internal buffer identifier
     std::size_t   m_size;          ///< Size in Vertexes of the currently allocated buffer
-    PrimitiveType m_primitiveType; ///< Type of primitives to bonusSelector
+    PrimitiveType m_primitiveType; ///< Type of primitives to draw
     Usage         m_usage;         ///< How this vertex buffer is to be used
 };
 
@@ -356,7 +356,7 @@ private:
 /// Unlike sf::VertexArray, the vertex data is stored in
 /// graphics memory.
 ///
-/// In situations where a large bonusCount of vertex data would
+/// In situations where a large amount of vertex data would
 /// have to be transferred from system memory to graphics memory
 /// every frame, using sf::VertexBuffer can help. By using a
 /// sf::VertexBuffer, data that has not been changed between frames
@@ -385,7 +385,7 @@ private:
 /// Simultaneous updates of distinct non-overlapping regions of the buffer
 /// are also not guaranteed to complete in a specific order. However, in
 /// this case the user can make sure to synchronize the writer threads at
-/// well-defined points in their playerMotion. The driver will make sure that all
+/// well-defined points in their code. The driver will make sure that all
 /// pending data transfers complete before the vertex buffer is sourced
 /// by the rendering pipeline.
 ///
@@ -400,7 +400,7 @@ private:
 /// triangles.create(15);
 /// triangles.update(vertices);
 /// ...
-/// window.bonusSelector(triangles);
+/// window.draw(triangles);
 /// \endcode
 ///
 /// \see sf::Vertex, sf::VertexArray

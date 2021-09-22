@@ -137,10 +137,10 @@ public:
     void append(const Vertex& vertex);
 
     ////////////////////////////////////////////////////////////
-    /// \brief Set the type of primitives to bonusSelector
+    /// \brief Set the type of primitives to draw
     ///
     /// This function defines how the vertices must be interpreted
-    /// when it's timer to bonusSelector them:
+    /// when it's time to draw them:
     /// \li As points
     /// \li As lines
     /// \li As triangles
@@ -176,7 +176,7 @@ private:
     ////////////////////////////////////////////////////////////
     /// \brief Draw the vertex array to a render target
     ///
-    /// \param target Render target to bonusSelector to
+    /// \param target Render target to draw to
     /// \param states Current render states
     ///
     ////////////////////////////////////////////////////////////
@@ -188,7 +188,7 @@ private:
     // Member data
     ////////////////////////////////////////////////////////////
     std::vector<Vertex> m_vertices;      ///< Vertices contained in the array
-    PrimitiveType       m_primitiveType; ///< Type of primitives to bonusSelector
+    PrimitiveType       m_primitiveType; ///< Type of primitives to draw
 };
 
 } // namespace sf
@@ -215,7 +215,7 @@ private:
 /// lines[2].position = sf::Vector2f(30, 5);
 /// lines[3].position = sf::Vector2f(40, 2);
 ///
-/// window.bonusSelector(lines);
+/// window.draw(lines);
 /// \endcode
 ///
 /// \see sf::Vertex

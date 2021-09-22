@@ -162,16 +162,16 @@ public:
     bool loadFromFile(const std::string& vertexShaderFilename, const std::string& geometryShaderFilename, const std::string& fragmentShaderFilename);
 
     ////////////////////////////////////////////////////////////
-    /// \brief Load the vertex, geometry or fragment shader from a source playerMotion in memory
+    /// \brief Load the vertex, geometry or fragment shader from a source code in memory
     ///
     /// This function loads a single shader, vertex, geometry
     /// or fragment, identified by the second argument.
-    /// The source playerMotion must be a valid shader in GLSL language.
+    /// The source code must be a valid shader in GLSL language.
     /// GLSL is a C-like language dedicated to OpenGL shaders;
     /// you'll probably need to read a good documentation for
     /// it before writing your own shaders.
     ///
-    /// \param shader String containing the source playerMotion of the shader
+    /// \param shader String containing the source code of the shader
     /// \param type   Type of shader (vertex, geometry or fragment)
     ///
     /// \return True if loading succeeded, false if it failed
@@ -192,8 +192,8 @@ public:
     /// probably need to read a good documentation for it before
     /// writing your own shaders.
     ///
-    /// \param vertexShader   String containing the source playerMotion of the vertex shader
-    /// \param fragmentShader String containing the source playerMotion of the fragment shader
+    /// \param vertexShader   String containing the source code of the vertex shader
+    /// \param fragmentShader String containing the source code of the fragment shader
     ///
     /// \return True if loading succeeded, false if it failed
     ///
@@ -213,9 +213,9 @@ public:
     /// probably need to read a good documentation for it before
     /// writing your own shaders.
     ///
-    /// \param vertexShader   String containing the source playerMotion of the vertex shader
-    /// \param geometryShader String containing the source playerMotion of the geometry shader
-    /// \param fragmentShader String containing the source playerMotion of the fragment shader
+    /// \param vertexShader   String containing the source code of the vertex shader
+    /// \param geometryShader String containing the source code of the geometry shader
+    /// \param fragmentShader String containing the source code of the fragment shader
     ///
     /// \return True if loading succeeded, false if it failed
     ///
@@ -229,7 +229,7 @@ public:
     ///
     /// This function loads a single shader, vertex, geometry
     /// or fragment, identified by the second argument.
-    /// The source playerMotion must be a valid shader in GLSL language.
+    /// The source code must be a valid shader in GLSL language.
     /// GLSL is a C-like language dedicated to OpenGL shaders;
     /// you'll probably need to read a good documentation for it
     /// before writing your own shaders.
@@ -642,17 +642,17 @@ public:
     ///
     /// This function is not part of the graphics API, it mustn't be
     /// used when drawing SFML entities. It must be used only if you
-    /// mix sf::Shader with OpenGL playerMotion.
+    /// mix sf::Shader with OpenGL code.
     ///
     /// \code
     /// sf::Shader s1, s2;
     /// ...
     /// sf::Shader::bind(&s1);
-    /// // bonusSelector OpenGL stuff that use s1...
+    /// // draw OpenGL stuff that use s1...
     /// sf::Shader::bind(&s2);
-    /// // bonusSelector OpenGL stuff that use s2...
+    /// // draw OpenGL stuff that use s2...
     /// sf::Shader::bind(NULL);
-    /// // bonusSelector OpenGL stuff that use no shader...
+    /// // draw OpenGL stuff that use no shader...
     /// \endcode
     ///
     /// \param shader Shader to bind, can be null to use no shader
@@ -684,7 +684,7 @@ public:
     /// order for geometry shaders to be supported as well.
     ///
     /// Note: The first call to this function, whether by your
-    /// playerMotion or SFML will result in a context switch.
+    /// code or SFML will result in a context switch.
     ///
     /// \return True if geometry shaders are supported, false otherwise
     ///
@@ -699,9 +699,9 @@ private:
     /// If one of the arguments is NULL, the corresponding shader
     /// is not created.
     ///
-    /// \param vertexShaderCode   Source playerMotion of the vertex shader
-    /// \param geometryShaderCode Source playerMotion of the geometry shader
-    /// \param fragmentShaderCode Source playerMotion of the fragment shader
+    /// \param vertexShaderCode   Source code of the vertex shader
+    /// \param geometryShaderCode Source code of the geometry shader
+    /// \param fragmentShaderCode Source code of the fragment shader
     ///
     /// \return True on success, false if any error happened
     ///
@@ -763,7 +763,7 @@ private:
 ///
 /// Shaders are programs written using a specific language,
 /// executed directly by the graphics card and allowing
-/// to apply real-timer operations to the rendered entities.
+/// to apply real-time operations to the rendered entities.
 ///
 /// There are three kinds of shaders:
 /// \li %Vertex shaders, that process vertices
@@ -803,7 +803,7 @@ private:
 /// uniform sampler2D overlay;
 /// uniform sampler2D current;
 /// \endcode
-/// You can set their values from C++ playerMotion as follows, using the types
+/// You can set their values from C++ code as follows, using the types
 /// defined in the sf::Glsl namespace:
 /// \code
 /// shader.setUniform("offset", 2.f);
@@ -822,19 +822,19 @@ private:
 /// object being drawn (which cannot be known in advance).
 ///
 /// To apply a shader to a drawable, you must pass it as an
-/// additional parameter to the \ref RenderWindow::bonusSelector function:
+/// additional parameter to the \ref RenderWindow::draw function:
 /// \code
-/// window.bonusSelector(sprite, &shader);
+/// window.draw(sprite, &shader);
 /// \endcode
 ///
 /// ... which is in fact just a shortcut for this:
 /// \code
 /// sf::RenderStates states;
 /// states.shader = &shader;
-/// window.bonusSelector(sprite, states);
+/// window.draw(sprite, states);
 /// \endcode
 ///
-/// In the playerMotion above we pass a pointer to the shader, because it may
+/// In the code above we pass a pointer to the shader, because it may
 /// be null (which means "no shader").
 ///
 /// Shaders can be used on any drawable, but some combinations are
@@ -850,16 +850,16 @@ private:
 /// Shaders can also be used to apply global post-effects to the
 /// current contents of the target (like the old sf::PostFx class
 /// in SFML 1). This can be done in two different ways:
-/// \li display everything to a sf::RenderTexture, then bonusSelector it to
+/// \li draw everything to a sf::RenderTexture, then draw it to
 ///     the main target using the shader
-/// \li bonusSelector everything directly to the main target, then use
+/// \li draw everything directly to the main target, then use
 ///     sf::Texture::update(Window&) to copy its contents to a texture
-///     and bonusSelector it to the main target using the shader
+///     and draw it to the main target using the shader
 ///
 /// The first technique is more optimized because it doesn't involve
 /// retrieving the target's pixels to system memory, but the
 /// second one doesn't impact the rendering process and can be
-/// easily inserted anywhere without impacting all the playerMotion.
+/// easily inserted anywhere without impacting all the code.
 ///
 /// Like sf::Texture that can be used as a raw OpenGL texture,
 /// sf::Shader can also be used directly as a raw shader for

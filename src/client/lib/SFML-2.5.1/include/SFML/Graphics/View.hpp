@@ -327,13 +327,13 @@ private:
 /// window.setView(view);
 ///
 /// // Render stuff
-/// window.bonusSelector(someSprite);
+/// window.draw(someSprite);
 ///
 /// // Set the default view back
 /// window.setView(window.getDefaultView());
 ///
 /// // Render stuff not affected by the view
-/// window.bonusSelector(someText);
+/// window.draw(someText);
 /// \endcode
 ///
 /// See also the note on coordinates and undistorted rendering in sf::Transformable.

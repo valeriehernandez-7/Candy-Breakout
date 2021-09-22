@@ -167,7 +167,7 @@ public:
     ///
     /// This function is similar to Texture::generateMipmap and operates
     /// on the texture used as the target for drawing.
-    /// Be aware that any bonusSelector operation may modify the base level image data.
+    /// Be aware that any draw operation may modify the base level image data.
     /// For this reason, calling this function only makes sense after all
     /// drawing is completed and display has been called. Not calling display
     /// after subsequent drawing will lead to undefined behavior if a mipmap
@@ -185,7 +185,7 @@ public:
     /// future OpenGL rendering operations (so you shouldn't care
     /// about it if you're not doing direct OpenGL stuff).
     /// Only one context can be current in a thread, so if you
-    /// want to bonusSelector OpenGL geometry to another render target
+    /// want to draw OpenGL geometry to another render target
     /// (like a RenderWindow) don't forget to activate it again.
     ///
     /// \param active True to activate, false to deactivate
@@ -222,7 +222,7 @@ public:
     ///
     /// After drawing to the render-texture and calling Display,
     /// you can retrieve the updated texture using this function,
-    /// and bonusSelector it using a sprite (for example).
+    /// and draw it using a sprite (for example).
     /// The internal sf::Texture of a render-texture is always the
     /// same instance, so that it is possible to call this function
     /// once and keep a reference to the texture even after it is
@@ -239,7 +239,7 @@ private:
     // Member data
     ////////////////////////////////////////////////////////////
     priv::RenderTextureImpl* m_impl;    ///< Platform/hardware specific implementation
-    Texture                  m_texture; ///< Target texture to bonusSelector on
+    Texture                  m_texture; ///< Target texture to draw on
 };
 
 } // namespace sf
@@ -285,9 +285,9 @@ private:
 ///    texture.clear(sf::Color::Red);
 ///
 ///    // Draw stuff to the texture
-///    texture.bonusSelector(sprite);  // sprite is a sf::Sprite
-///    texture.bonusSelector(shape);   // shape is a sf::Shape
-///    texture.bonusSelector(text);    // text is a sf::Text
+///    texture.draw(sprite);  // sprite is a sf::Sprite
+///    texture.draw(shape);   // shape is a sf::Shape
+///    texture.draw(text);    // text is a sf::Text
 ///
 ///    // We're done drawing to the texture
 ///    texture.display();
@@ -297,7 +297,7 @@ private:
 ///
 ///    // Draw the texture
 ///    sf::Sprite sprite(texture.getTexture());
-///    window.bonusSelector(sprite);
+///    window.draw(sprite);
 ///
 ///    // End the current frame and display its contents on screen
 ///    window.display();
