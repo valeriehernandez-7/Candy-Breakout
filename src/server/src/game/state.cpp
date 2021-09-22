@@ -255,7 +255,7 @@ void PlayState::update(Clock &clock) {
         }
     }
 
-    // counter loading screen
+    // time to display bonus type
     if (clock.getElapsedTime().asSeconds() > 1 && timer > 0) {
         timer--;
         clock.restart();

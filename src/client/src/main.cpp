@@ -2,6 +2,7 @@
 #include "game/handler.h"
 
 SocketClient *player;
+Handler *handler;
 
 void *playerRun(void *) {
     try {
@@ -18,11 +19,9 @@ int main() {
     pthread_create(&threadPlayer, nullptr, playerRun, nullptr);
     pthread_detach(threadPlayer);
 
-    Handler handler;
-
     while (player) {
         string key;
-        key = handler.keyManager();
+        key = handler->keyManager();
 
         if (key == "<Escape>") {
             player->sendData(key.c_str());
