@@ -35,7 +35,7 @@
 namespace sf
 {
 ////////////////////////////////////////////////////////////
-/// \brief Utility class that measures the elapsed timer
+/// \brief Utility class that measures the elapsed time
 ///
 ////////////////////////////////////////////////////////////
 class SFML_SYSTEM_API Clock
@@ -51,9 +51,9 @@ public:
     Clock();
 
     ////////////////////////////////////////////////////////////
-    /// \brief Get the elapsed timer
+    /// \brief Get the elapsed time
     ///
-    /// This function returns the timer elapsed since the last call
+    /// This function returns the time elapsed since the last call
     /// to restart() (or the construction of the instance if restart()
     /// has not been called).
     ///
@@ -65,8 +65,8 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Restart the clock
     ///
-    /// This function puts the timer counter back to zero.
-    /// It also returns the timer elapsed since the clock was started.
+    /// This function puts the time counter back to zero.
+    /// It also returns the time elapsed since the clock was started.
     ///
     /// \return Time elapsed
     ///
@@ -91,12 +91,12 @@ private:
 /// \class sf::Clock
 /// \ingroup system
 ///
-/// sf::Clock is a lightweight class for measuring timer.
+/// sf::Clock is a lightweight class for measuring time.
 ///
-/// Its provides the most precise timer that the underlying
+/// Its provides the most precise time that the underlying
 /// OS can achieve (generally microseconds or nanoseconds).
 /// It also ensures monotonicity, which means that the returned
-/// timer can never go backward, even if the system timer is
+/// time can never go backward, even if the system time is
 /// changed.
 ///
 /// Usage example:

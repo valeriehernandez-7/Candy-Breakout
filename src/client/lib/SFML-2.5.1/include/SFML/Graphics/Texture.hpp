@@ -99,7 +99,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Load the texture from a file on disk
     ///
-    /// This function is a shortcut for the following playerMotion:
+    /// This function is a shortcut for the following code:
     /// \code
     /// sf::Image image;
     /// image.loadFromFile(filename);
@@ -130,7 +130,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Load the texture from a file in memory
     ///
-    /// This function is a shortcut for the following playerMotion:
+    /// This function is a shortcut for the following code:
     /// \code
     /// sf::Image image;
     /// image.loadFromMemory(data, size);
@@ -162,7 +162,7 @@ public:
     ////////////////////////////////////////////////////////////
     /// \brief Load the texture from a custom stream
     ///
-    /// This function is a shortcut for the following playerMotion:
+    /// This function is a shortcut for the following code:
     /// \code
     /// sf::Image image;
     /// image.loadFromStream(stream);
@@ -499,7 +499,7 @@ public:
     /// Mipmap generation relies on the necessary OpenGL extension being
     /// available. If it is unavailable or generation fails due to another
     /// reason, this function will return false. Mipmap data is only valid from
-    /// the timer it is generated until the next timer the base level image is
+    /// the time it is generated until the next time the base level image is
     /// modified, at which point this function will have to be called again to
     /// regenerate it.
     ///
@@ -543,17 +543,17 @@ public:
     ///
     /// This function is not part of the graphics API, it mustn't be
     /// used when drawing SFML entities. It must be used only if you
-    /// mix sf::Texture with OpenGL playerMotion.
+    /// mix sf::Texture with OpenGL code.
     ///
     /// \code
     /// sf::Texture t1, t2;
     /// ...
     /// sf::Texture::bind(&t1);
-    /// // bonusSelector OpenGL stuff that use t1...
+    /// // draw OpenGL stuff that use t1...
     /// sf::Texture::bind(&t2);
-    /// // bonusSelector OpenGL stuff that use t2...
+    /// // draw OpenGL stuff that use t2...
     /// sf::Texture::bind(NULL);
-    /// // bonusSelector OpenGL stuff that use no texture...
+    /// // draw OpenGL stuff that use no texture...
     /// \endcode
     ///
     /// The \a coordinateType argument controls how texture
@@ -638,8 +638,8 @@ private:
 /// \ingroup graphics
 ///
 /// sf::Texture stores pixels that can be drawn, with a sprite
-/// for example. A texture playerHealth in the graphics card memory,
-/// therefore it is very fast to bonusSelector a texture to a render target,
+/// for example. A texture lives in the graphics card memory,
+/// therefore it is very fast to draw a texture to a render target,
 /// or copy a render target to a texture (the graphics card can
 /// access both directly).
 ///
@@ -688,12 +688,12 @@ private:
 /// sprite.setTexture(texture);
 ///
 /// // Draw the textured sprite
-/// window.bonusSelector(sprite);
+/// window.draw(sprite);
 /// \endcode
 ///
 /// \code
 /// // This example shows another common use of sf::Texture:
-/// // streaming real-timer data, like video frames
+/// // streaming real-time data, like video frames
 ///
 /// // Create an empty texture
 /// sf::Texture texture;
@@ -711,8 +711,8 @@ private:
 ///     sf::Uint8* pixels = ...; // get a fresh chunk of pixels (the next frame of a movie, for example)
 ///     texture.update(pixels);
 ///
-///     // bonusSelector it
-///     window.bonusSelector(sprite);
+///     // draw it
+///     window.draw(sprite);
 ///
 ///     ...
 /// }

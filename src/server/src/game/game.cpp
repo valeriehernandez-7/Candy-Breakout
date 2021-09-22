@@ -1,10 +1,11 @@
+#include "communication/socketserver.h"
 #include "game/game.h"
 #include "game/state.h"
 
 using namespace std;
 using namespace sf;
 
-Game::Game() : window{VideoMode(550, 450), "CANDY BREAKOUT"}, gameClosed{false},
+Game::Game() : window{VideoMode(550, 450), "CANDY BREAKOUT", Style::Titlebar | Style::Close},
                gamePaused{false}, gameWon{false}, totalScore{0}, levelNumber{1} {
 
     window.setFramerateLimit(60);
@@ -32,42 +33,42 @@ Font &Game::getFont() {
     return font;
 }
 
-void Game::run() {
+void Game::run(string key) {
     Clock frames;
     Event event;
-    while (window.isOpen()) {
-        while (window.pollEvent(event)) {
-            if (event.type == Event::Closed)
-                window.close();
-            if (event.type == Event::KeyPressed) {
-                if (event.key.code == Keyboard::Space) {
-                    if (currentState == states[State::initial])
-                        setState(State::load);
-                }
-                if (event.key.code == Keyboard::Enter) {
-                    if (currentState == states[State::final]) {
-                        newGame();
-                        setState(State::initial);
-                    }
-                }
-                if (event.key.code == Keyboard::Escape) {
-                    if (currentState == states[State::final] || currentState == states[State::initial])
-                        window.close();
-                }
-                if (event.key.code == Keyboard::P) {
-                    if (currentState == states[State::play])
-                        gamePaused = !gamePaused;
+    while (window.pollEvent(event)) {
+        if (event.type == Event::Closed || key == "<Escape>") {
+            window.close();
+            cout << "CONNECTION CLOSED" << endl;
+            exit(EXIT_SUCCESS);
+        }
+        if (event.type == Event::KeyPressed) {
+            if (key == "<Space>") {
+                if (currentState == states[State::initial]) {
+                    setState(State::load);
                 }
             }
-            currentState->handler(event);
+            if (key == "<Enter>") {
+                if (currentState == states[State::final]) {
+                    newGame();
+                    setState(State::initial);
+                }
+            }
+            if (key == "<P>") {
+                if (currentState == states[State::play]) {
+                    gamePaused = !gamePaused;
+                }
+            }
         }
-        if (!gamePaused) {
-            currentState->update(frames);
-        }
-        window.clear();
-        currentState->display(window);
-        window.display();
+        currentState->handler(event, key);
+//        cout << " | KEY " + key << endl;
     }
+    if (!gamePaused) {
+        currentState->update(frames);
+    }
+    window.clear();
+    currentState->display(window);
+    window.display();
 }
 
 void Game::setState(State::states state) {
@@ -82,7 +83,6 @@ void Game::resetGame() {
 void Game::newGame() {
     levelNumber = 1;
     totalScore = 0;
-    gameClosed = false;
 }
 
 void Game::loadGame() {

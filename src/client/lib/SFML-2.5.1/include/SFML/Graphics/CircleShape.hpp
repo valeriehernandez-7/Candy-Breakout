@@ -137,10 +137,10 @@ private:
 /// circle.setOutlineThickness(5);
 /// circle.setPosition(10, 20);
 /// ...
-/// window.bonusSelector(circle);
+/// window.draw(circle);
 /// \endcode
 ///
-/// Since the graphics card can't bonusSelector perfect circles, we have to
+/// Since the graphics card can't draw perfect circles, we have to
 /// fake them with multiple triangles connected to each other. The
 /// "points count" property of sf::CircleShape defines how many of these
 /// triangles to use, and therefore defines the quality of the circle.

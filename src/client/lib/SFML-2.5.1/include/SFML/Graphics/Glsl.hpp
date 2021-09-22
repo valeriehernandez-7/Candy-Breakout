@@ -101,7 +101,7 @@ namespace Glsl
     /// 4D float vectors can be implicitly converted from sf::Color
     /// instances. Each color channel is normalized from integers
     /// in [0, 255] to floating point values in [0, 1].
-    /// \playerMotion
+    /// \code
     /// sf::Glsl::Vec4 zeroVector;
     /// sf::Glsl::Vec4 vector(1.f, 2.f, 3.f, 4.f);
     /// sf::Glsl::Vec4 color = sf::Color::Cyan;
@@ -115,7 +115,7 @@ namespace Glsl
     /// 4D int vectors can be implicitly converted from sf::Color
     /// instances. Each color channel remains unchanged inside
     /// the integer interval [0, 255].
-    /// \playerMotion
+    /// \code
     /// sf::Glsl::Ivec4 zeroVector;
     /// sf::Glsl::Ivec4 vector(1, 2, 3, 4);
     /// sf::Glsl::Ivec4 color = sf::Color::Cyan;
@@ -135,7 +135,7 @@ namespace Glsl
     /// The matrix can be constructed from an array with 3x3
     /// elements, aligned in column-major order. For example,
     /// a translation by (x, y) looks as follows:
-    /// \playerMotion
+    /// \code
     /// float array[9] =
     /// {
     ///     1, 0, 0,
@@ -147,7 +147,7 @@ namespace Glsl
     /// \endcode
     ///
     /// Mat3 can also be implicitly converted from sf::Transform:
-    /// \playerMotion
+    /// \code
     /// sf::Transform transform;
     /// sf::Glsl::Mat3 matrix = transform;
     /// \endcode
@@ -160,7 +160,7 @@ namespace Glsl
     /// The matrix can be constructed from an array with 4x4
     /// elements, aligned in column-major order. For example,
     /// a translation by (x, y, z) looks as follows:
-    /// \playerMotion
+    /// \code
     /// float array[16] =
     /// {
     ///     1, 0, 0, 0,
@@ -173,7 +173,7 @@ namespace Glsl
     /// \endcode
     ///
     /// Mat4 can also be implicitly converted from sf::Transform:
-    /// \playerMotion
+    /// \code
     /// sf::Transform transform;
     /// sf::Glsl::Mat4 matrix = transform;
     /// \endcode

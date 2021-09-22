@@ -1,3 +1,4 @@
+#include "communication/socketserver.h"
 #include "game/game.h"
 #include "game/state.h"
 
@@ -21,7 +22,7 @@ void State::update(Clock &clock) {}
 
 void State::display(RenderWindow &window) {}
 
-void State::handler(Event &event) {}
+void State::handler(Event &event, string &key) {}
 
 
 /////// InitialState ///////
@@ -278,36 +279,35 @@ void PlayState::display(RenderWindow &window) {
     window.draw(txtPlayerScore);
 }
 
-void PlayState::handler(Event &e) {
-    if (e.type == Event::KeyPressed) {
+void PlayState::handler(Event &event, string &key) {
+    if (key == "<>") {
+        player.setRotation(0);
+        playerMotion = 0;
+    }
+    if (event.type == Event::KeyPressed) {
         if (!ballStatus) {
-            if (e.key.code == Keyboard::Up) {
+            if (key == "<Up>") {
                 ballRelease();
             }
         }
-        if (e.key.code == Keyboard::Left) {
+        if (key == "<Left>") {
             playerMotion = 1;
         }
-        if (e.key.code == Keyboard::Right) {
+        if (key == "<Right>") {
             playerMotion = 2;
         }
-        if (e.key.code == Keyboard::A) {
+        if (key == "<A>") {
             playerMotion = 3;
         }
-        if (e.key.code == Keyboard::D) {
+        if (key == "<D>") {
             playerMotion = 4;
         }
-        if (e.key.code == Keyboard::Escape) {
-            getGameState().gameClosed = true;
-            getGameState().totalScore += playerScore;
-            getGameState().setState(State::final);
-        }
     }
-    if (e.type == Event::KeyReleased) {
-        if (e.key.code == Keyboard::Left || e.key.code == Keyboard::Right) {
+    if (event.type == Event::KeyReleased) {
+        if (key == "<Left>" || key == "<Right>") {
             playerMotion = 0;
         }
-        if (e.key.code == Keyboard::A || e.key.code == Keyboard::D) {
+        if (key == "<A>" || key == "<D>") {
             player.setRotation(0);
             playerMotion = 0;
         }
@@ -415,19 +415,18 @@ LoadState::LoadState(Game *game) : State{game}, timer{3} {
 LoadState::~LoadState() {}
 
 void LoadState::update(Clock &clock) {
-    if (clock.getElapsedTime().asSeconds() > 1) {
-        txtLevel.setString("Level " + to_string(getGameState().getLevel()));
-        txtTimer.setString(to_string(timer));
-        timer--;
-        clock.restart();
-        if (timer < 0) {
-            timer = 3;
-            if (getGameState().getLevel() > 1) {
-                getGameState().resetGame();
-            }
-            getGameState().loadGame();
-            getGameState().setState(State::play);
+    txtLevel.setString("Level " + to_string(getGameState().getLevel()));
+    txtTimer.setString(to_string(timer));
+    sleep(1);
+    timer--;
+    clock.restart();
+    if (timer < 0) {
+        timer = 3;
+        if (getGameState().getLevel() > 1) {
+            getGameState().resetGame();
         }
+        getGameState().loadGame();
+        getGameState().setState(State::play);
     }
 }
 
@@ -464,9 +463,7 @@ OverState::OverState(Game *game) : State{game} {
 OverState::~OverState() {}
 
 void OverState::update(Clock &clock) {
-    if (getGameState().gameClosed) {
-        message.setString("GAME OVER");
-    } else if (!getGameState().gameWon) {
+    if (!getGameState().gameWon) {
         message.setString("GAME OVER");
     } else if (getGameState().gameWon) {
         message.setString("  VICTORY");

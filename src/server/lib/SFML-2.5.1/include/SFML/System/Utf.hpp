@@ -53,7 +53,7 @@ public:
     /// \brief Decode a single UTF-8 character
     ///
     /// Decoding a character means finding its unique 32-bits
-    /// playerMotion (called the codepoint) in the Unicode standard.
+    /// code (called the codepoint) in the Unicode standard.
     ///
     /// \param begin       Iterator pointing to the beginning of the input sequence
     /// \param end         Iterator pointing to the end of the input sequence
@@ -70,7 +70,7 @@ public:
     /// \brief Encode a single UTF-8 character
     ///
     /// Encoding a character means converting a unique 32-bits
-    /// playerMotion (called the codepoint) in the target encoding, UTF-8.
+    /// code (called the codepoint) in the target encoding, UTF-8.
     ///
     /// \param input       Codepoint to encode as UTF-8
     /// \param output      Iterator pointing to the beginning of the output sequence
@@ -208,7 +208,7 @@ public:
     /// This functions does nothing more than a direct copy;
     /// it is defined only to provide the same interface as other
     /// specializations of the sf::Utf<> template, and allow
-    /// generic playerMotion to be written on top of it.
+    /// generic code to be written on top of it.
     ///
     /// \param begin  Iterator pointing to the beginning of the input sequence
     /// \param end    Iterator pointing to the end of the input sequence
@@ -260,7 +260,7 @@ public:
     /// \brief Decode a single UTF-16 character
     ///
     /// Decoding a character means finding its unique 32-bits
-    /// playerMotion (called the codepoint) in the Unicode standard.
+    /// code (called the codepoint) in the Unicode standard.
     ///
     /// \param begin       Iterator pointing to the beginning of the input sequence
     /// \param end         Iterator pointing to the end of the input sequence
@@ -277,7 +277,7 @@ public:
     /// \brief Encode a single UTF-16 character
     ///
     /// Encoding a character means converting a unique 32-bits
-    /// playerMotion (called the codepoint) in the target encoding, UTF-16.
+    /// code (called the codepoint) in the target encoding, UTF-16.
     ///
     /// \param input       Codepoint to encode as UTF-16
     /// \param output      Iterator pointing to the beginning of the output sequence
@@ -428,7 +428,7 @@ public:
     /// This functions does nothing more than a direct copy;
     /// it is defined only to provide the same interface as other
     /// specializations of the sf::Utf<> template, and allow
-    /// generic playerMotion to be written on top of it.
+    /// generic code to be written on top of it.
     ///
     /// \param begin  Iterator pointing to the beginning of the input sequence
     /// \param end    Iterator pointing to the end of the input sequence
@@ -467,7 +467,7 @@ public:
     /// \brief Decode a single UTF-32 character
     ///
     /// Decoding a character means finding its unique 32-bits
-    /// playerMotion (called the codepoint) in the Unicode standard.
+    /// code (called the codepoint) in the Unicode standard.
     /// For UTF-32, the character value is the same as the codepoint.
     ///
     /// \param begin       Iterator pointing to the beginning of the input sequence
@@ -485,7 +485,7 @@ public:
     /// \brief Encode a single UTF-32 character
     ///
     /// Encoding a character means converting a unique 32-bits
-    /// playerMotion (called the codepoint) in the target encoding, UTF-32.
+    /// code (called the codepoint) in the target encoding, UTF-32.
     /// For UTF-32, the codepoint is the same as the character value.
     ///
     /// \param input       Codepoint to encode as UTF-32
@@ -649,7 +649,7 @@ public:
     /// This functions does nothing more than a direct copy;
     /// it is defined only to provide the same interface as other
     /// specializations of the sf::Utf<> template, and allow
-    /// generic playerMotion to be written on top of it.
+    /// generic code to be written on top of it.
     ///
     /// \param begin  Iterator pointing to the beginning of the input sequence
     /// \param end    Iterator pointing to the end of the input sequence

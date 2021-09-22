@@ -19,7 +19,7 @@ public:
 
     Font &getFont();
 
-    void run();
+    void run(string key);
 
     void setState(State::states state);
 
@@ -42,7 +42,6 @@ private:
     Font font;
     array<State*, 4> states;
     State* currentState;
-    bool gameClosed;
     bool gamePaused;
     bool gameWon;
     int totalScore;
