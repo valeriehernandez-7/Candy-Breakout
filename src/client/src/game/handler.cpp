@@ -1,3 +1,6 @@
+/*!
+ * \headerfile handler.h "game/handler.h"
+ */
 #include "game/handler.h"
 
 string Handler::keyManager() {

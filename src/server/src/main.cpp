@@ -26,6 +26,6 @@ int main() {
 
     delete server;
     delete game;
-    cout << "CONNECTION CLOSED" << endl;
+    cout << "SERVER CONNECTION CLOSED" << endl;
     return EXIT_SUCCESS;
 }

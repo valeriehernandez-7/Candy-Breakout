@@ -78,7 +78,10 @@ void *SocketServer::controller(void *obj) {
 }
 
 void SocketServer::sendData(const char *msn) {
-    for (int player: players) {
-        send(player, msn, strlen(msn), 0);
+    for (int p = 0; p < players.size(); p++) {
+        send(players[p], msn, strlen(msn), 0);
+        if (send(players[p], msn, strlen(msn), 0) == -1) {
+            fprintf(stderr, "ERROR: SENDING FAILED\n");
+        }
     }
 }

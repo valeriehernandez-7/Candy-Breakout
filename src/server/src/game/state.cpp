@@ -38,9 +38,8 @@ InitialState::InitialState(Game *game) : State{game} {
 
     txtKey.setFont(getGameState().getFont());
     txtKey.setCharacterSize(17);
-    txtKey.setString("[SPACE] - Play\n  [ESC] - Quit");
+    txtKey.setString("[SPACE] - Play");
     txtKey.setPosition(395, 300);
-
 }
 
 InitialState::~InitialState() {}
@@ -204,6 +203,7 @@ void PlayState::update(Clock &clock) {
                 bonus.bonusDismiss(player, playerSpeed, candies, textures); // dismiss bonus
                 ballGenerator();
             }
+            bonusInfo.setString("");
         }
     }
 
@@ -238,7 +238,6 @@ void PlayState::update(Clock &clock) {
                 } else if (bonus.bonusType == "player+Speed") {
                     bonusInfo.setString("+P SPEED");
                 }
-                timer = 3;
             }
         }
     }
@@ -252,15 +251,6 @@ void PlayState::update(Clock &clock) {
             getGameState().setState(State::final);
         } else {
             getGameState().setState(State::load);
-        }
-    }
-
-    // time to display bonus type
-    if (clock.getElapsedTime().asSeconds() > 1 && timer > 0) {
-        timer--;
-        clock.restart();
-        if (timer <= 0) {
-            bonusInfo.setString("");
         }
     }
 }

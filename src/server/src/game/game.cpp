@@ -37,12 +37,16 @@ void Game::run(string key) {
     Clock frames;
     Event event;
     while (window.pollEvent(event)) {
-        if (event.type == Event::Closed || key == "<Escape>") {
+        if (event.type == Event::Closed) {
             window.close();
-            cout << "CONNECTION CLOSED" << endl;
-            exit(EXIT_SUCCESS);
         }
         if (event.type == Event::KeyPressed) {
+            if (key == "<Escape>") {
+                if (currentState != states[State::initial]) {
+                    newGame();
+                    setState(State::initial);
+                }
+            }
             if (key == "<Space>") {
                 if (currentState == states[State::initial]) {
                     setState(State::load);
