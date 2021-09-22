@@ -2,11 +2,11 @@
 #define CLIENT_HANDLER_H
 
 /*!
- * \include SFML/Window.hpp
  * \include communication/socketclient.h
+ * \include SFML/Window.hpp
  */
-#include "SFML/Window.hpp"
 #include "communication/socketclient.h"
+#include "SFML/Window.hpp"
 
 /*!
  * \namespace std General-purpose polymorphic function wrapper.

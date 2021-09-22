@@ -5,8 +5,8 @@
 #include "communication/socketclient.h"
 #include "game/handler.h"
 
-SocketClient *player;  /*!< Pointer to SocketClient Class. */
-Handler *handler;  /*!< Pointer to Handler Class. */
+SocketClient *player; /*!< Pointer to SocketClient Class. */
+Handler *handler; /*!< Pointer to Handler Class. */
 
 /*! \fn void *playerRun(void *)
  *  \brief Thread controller.
@@ -25,13 +25,13 @@ void *playerRun(void *) {
 
 /*! \fn int main()
  *  \brief Client execution.
- *  Creates a new pointer to the SocketClient class, generates the thread that will handle client-side communication.
+ *  Creates a new pointer to the SocketClient Class, generates the thread that will handle client-side communication.
  *  As long as the client socket exists the program will send the information obtained from the Handler class.
  *  \return void exit(EXIT_SUCCESS)
  */
 int main() {
     player = new SocketClient;
-    pthread_t threadPlayer;  /*!< Thread to handle client-side communication. */
+    pthread_t threadPlayer; /*!< Thread to handle client-side communication. */
     pthread_create(&threadPlayer, nullptr, playerRun, nullptr);
     pthread_detach(threadPlayer);
 

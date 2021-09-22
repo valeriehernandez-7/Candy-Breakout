@@ -1,9 +1,7 @@
-#include "communication/socketserver.h"
+/*!
+ * \headerfile game.h "game/game.h"
+ */
 #include "game/game.h"
-#include "game/state.h"
-
-using namespace std;
-using namespace sf;
 
 Game::Game() : window{VideoMode(550, 450), "CANDY BREAKOUT", Style::Titlebar | Style::Close},
                gamePaused{false}, gameWon{false}, totalScore{0}, levelNumber{1} {
@@ -65,7 +63,6 @@ void Game::run(string key) {
             }
         }
         currentState->handler(event, key);
-//        cout << " | KEY " + key << endl;
     }
     if (!gamePaused) {
         currentState->update(frames);

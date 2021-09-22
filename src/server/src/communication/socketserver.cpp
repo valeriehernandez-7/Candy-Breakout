@@ -1,3 +1,6 @@
+/*!
+ * \headerfile socketserver.h "communication/socketserver.h"
+ */
 #include "communication/socketserver.h"
 
 string SocketServer::playerKeyPressed;
@@ -44,29 +47,29 @@ void SocketServer::receive() {
             break;
         } else {
             players.push_back(playerData.descriptor);
-            pthread_t thread;
+            pthread_t thread; /*!< Thread to handle server events. */
             pthread_create(&thread, nullptr, SocketServer::controller, (void *) &playerData);
             pthread_detach(thread);
-            cout << "PLAYER " + to_string(playerData.descriptor) + " CONNECTED" << endl;
+            cout << "PLAYER CONNECTED" << endl;
         }
     }
     close(descriptor);
 }
 
 void *SocketServer::controller(void *obj) {
-    auto *playerData = (PlayerSocket *) obj;
+    auto *playerData = (PlayerSocket *) obj; /*!< Reference to the attributes of the PlayerSocket Structure. */
 
     while (true) {
-        string message;
-        char buffer[1024] = {0};
+        string message; /*!< Message received from the client. */
+        char buffer[1024] = {0}; /*!< Holds control and states information for the socket layer. */
 
         while (true) {
             memset(buffer, 0, 1024);
-            int bytes = recv(playerData->descriptor, buffer, 1024, 0);
+            int bytes = recv(playerData->descriptor, buffer, 1024, 0); /*!< Bytes received from the client. */
             message.append(buffer, bytes);
             if (bytes <= 0) {
                 close(playerData->descriptor);
-                cout << "PLAYER " + to_string(playerData->descriptor) + " DISCONNECTED" << endl;
+                cout << "PLAYER DISCONNECTED" << endl;
                 pthread_exit(nullptr);
             }
             if (bytes < 1024) {
@@ -74,6 +77,7 @@ void *SocketServer::controller(void *obj) {
             }
         }
         SocketServer::playerKeyPressed = message;
+        cout << " | KEY " + message << endl;
     }
 }
 

@@ -43,10 +43,10 @@ public:
     void connection();
 
     /*! \fn void sendData(const char *msn) const
-     *  \brief Sends N bytes of BUF to client socket.
+     *  \brief Sends N bytes of BUF to server socket.
      *  Sends the client's information to the server, and notifies the client if it is not possible to sent the information.
      *  \param msn set of characters sent to the server
-     *  \return the number of characters sent
+     *  \return integer as the number of characters sent
      *  \exception stderr standard error output stream in case the number of bytes is equal to -1.
      *  \example socketclient.cpp
      */
@@ -57,13 +57,13 @@ private:
      *  \brief Reads N bytes into BUF from server socket.
      *  Reads the information from the server, and notifies the client if it is not possible to received the information.
      *  \param obj points to the attributes of the SocketClient Class
-     *  \return the number of characters received
+     *  \return integer as the number of characters received
      *  \exception stderr standard error output stream in case the number of bytes is less than or equal to 0.
      *  \example socketclient.cpp
      */
     static void *controller(void *obj);
 
-    int descriptor; /*!< Socket of type SOCK_STREAM in domain AF_INET, using protocol IPPROTO_TCP. */
+    int descriptor; /*!< Client socket of type SOCK_STREAM in domain AF_INET, using protocol IPPROTO_TCP. */
     sockaddr_in info; /*!< Structure describing the Internet client socket address. */
 };
 

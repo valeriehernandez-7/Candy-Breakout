@@ -1,14 +1,14 @@
-#include "communication/socketserver.h"
-#include "game/game.h"
+/*!
+ * \headerfile state.h "game/state.h"
+ */
 #include "game/state.h"
 
-#include <cstdlib>
-#include <iostream>
+/*!
+ * \include game/game.h
+ */
+#include "game/game.h"
 
-using namespace std;
-using namespace sf;
-
-/////// State ///////
+// --- State ---
 
 State::State(Game *game) : window{game->getWindow()}, gameState{game} {}
 
@@ -25,7 +25,7 @@ void State::display(RenderWindow &window) {}
 void State::handler(Event &event, string &key) {}
 
 
-/////// InitialState ///////
+// --- InitialState ---
 
 InitialState::InitialState(Game *game) : State{game} {
     textures[tGameScreen].loadFromFile("resources/screen/i_s-start.png");
@@ -51,7 +51,7 @@ void InitialState::display(RenderWindow &window) {
 }
 
 
-/////// PlayState ///////
+// --- PlayState ---
 
 PlayState::PlayState(Game *game) : State(game), ballStatus{false}, playerScore{0}, playerMotion{5}, playerHealth{3}, playerSpeed{8}, timer{0} {
     levelImage.loadFromFile("resources/level/l-" + to_string(getGameState().getLevel()) + ".png");
@@ -345,15 +345,23 @@ void PlayState::ballGenerator() {
 }
 
 void PlayState::ballRelease() {
+    int direction = rand() % 2;
     for (unsigned b = 0; b < balls.size(); b++) {
-        balls[b].offset.x = -3;
-        balls[b].offset.y = -5;
+        if (direction == 0) {
+            balls[b].offset.x = -3;
+            balls[b].offset.y = -5;
+        }
+        if (direction == 1) {
+            balls[b].offset.x = 3;
+            balls[b].offset.y = 5;
+        }
     }
     ballStatus = true;
 }
 
 void PlayState::bonusGenerator() {
     int bonusTotal = rand() % bonus.bonusCount;
+    cout << "LEVEL " + to_string(getGameState().getLevel()) + " || BONUS " + to_string(bonusTotal) << endl;
     for (int i = 0; i < bonusTotal; i++) {
         int randIndex = rand() % candies.size();
         if (candies[randIndex].bonus) {
@@ -365,12 +373,14 @@ void PlayState::bonusGenerator() {
 
 void PlayState::candyManager(vector<Candy> &candies, unsigned &id) {
     candies[id].resistance--;
+    // common ball state (NO BONUS)
     if (candies[id].resistance == 0) {
         playerScore += candies[id].points;
         if (!candies[id].bonus) {
             candies.erase(candies.begin() + id);
         }
     }
+    // super ball state (BONUS)
     if (candies[id].special && candies.size() > 0) {
         candies[id].resistance = 0;
         playerScore += 30;
@@ -380,7 +390,8 @@ void PlayState::candyManager(vector<Candy> &candies, unsigned &id) {
     }
 }
 
-/////// LoadState ///////
+
+// --- LoadState ---
 
 LoadState::LoadState(Game *game) : State{game}, timer{3} {
     textures[tGameScreen].loadFromFile("resources/screen/i_s-game.png");
