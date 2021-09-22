@@ -119,7 +119,7 @@ public:
     /// A window is active only on the current thread, if you want to
     /// make it active on another thread you have to deactivate it
     /// on the previous thread first if it was active.
-    /// Only one window can be active on a thread at a timer, thus
+    /// Only one window can be active on a thread at a time, thus
     /// the window previously active (if any) automatically gets deactivated.
     /// This is not to be confused with requestFocus().
     ///
@@ -149,7 +149,7 @@ public:
     /// image with the contents of the window and then use it for
     /// drawing, you should rather use a sf::Texture and its
     /// update(Window&) function.
-    /// You can also bonusSelector things directly to a texture with the
+    /// You can also draw things directly to a texture with the
     /// sf::RenderTexture class.
     ///
     /// \return Image containing the captured contents
@@ -203,7 +203,7 @@ private:
 /// sf::RenderWindow is derived from sf::Window, thus it inherits
 /// all its features: events, window management, OpenGL rendering,
 /// etc. See the documentation of sf::Window for a more complete
-/// description of all these features, as well as playerMotion examples.
+/// description of all these features, as well as code examples.
 ///
 /// On top of that, sf::RenderWindow adds more features related to
 /// 2D drawing with the graphics module (see its base class
@@ -233,9 +233,9 @@ private:
 ///    window.clear();
 ///
 ///    // Draw some graphical entities
-///    window.bonusSelector(sprite);
-///    window.bonusSelector(circle);
-///    window.bonusSelector(text);
+///    window.draw(sprite);
+///    window.draw(circle);
+///    window.draw(text);
 ///
 ///    // End the current frame and display its contents on screen
 ///    window.display();
@@ -267,7 +267,7 @@ private:
 ///
 ///     // Draw a background sprite
 ///     window.pushGLStates();
-///     window.bonusSelector(sprite);
+///     window.draw(sprite);
 ///     window.popGLStates();
 ///
 ///     // Draw a 3D object using OpenGL
@@ -278,7 +278,7 @@ private:
 ///
 ///     // Draw text on top of the 3D object
 ///     window.pushGLStates();
-///     window.bonusSelector(text);
+///     window.draw(text);
 ///     window.popGLStates();
 ///
 ///     // Finally, display the rendered frame on screen

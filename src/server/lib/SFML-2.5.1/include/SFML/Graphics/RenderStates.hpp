@@ -150,7 +150,7 @@ public:
 /// directly without defining render states explicitly -- the
 /// default set of states is ok in most cases.
 /// \code
-/// window.bonusSelector(sprite);
+/// window.draw(sprite);
 /// \endcode
 ///
 /// If you want to use a single specific render state,
@@ -158,7 +158,7 @@ public:
 /// function: sf::RenderStates has an implicit one-argument
 /// constructor for each state.
 /// \code
-/// window.bonusSelector(sprite, shader);
+/// window.draw(sprite, shader);
 /// \endcode
 ///
 /// When you're inside the Draw function of a drawable

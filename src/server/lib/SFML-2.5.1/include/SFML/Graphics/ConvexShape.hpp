@@ -145,7 +145,7 @@ private:
 /// polygon.setOutlineThickness(5);
 /// polygon.setPosition(10, 20);
 /// ...
-/// window.bonusSelector(polygon);
+/// window.draw(polygon);
 /// \endcode
 ///
 /// \see sf::Shape, sf::RectangleShape, sf::CircleShape

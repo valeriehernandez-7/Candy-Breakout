@@ -37,7 +37,7 @@ namespace sf
 class Window;
 
 ////////////////////////////////////////////////////////////
-/// \brief Give access to the real-timer state of the mouse
+/// \brief Give access to the real-time state of the mouse
 ///
 ////////////////////////////////////////////////////////////
 class SFML_WINDOW_API Mouse
@@ -142,10 +142,10 @@ public:
 /// mouse is assumed), so it's not meant to be instantiated.
 ///
 /// This class allows users to query the mouse state at any
-/// timer and directly, without having to deal with a window and
+/// time and directly, without having to deal with a window and
 /// its events. Compared to the MouseMoved, MouseButtonPressed
 /// and MouseButtonReleased events, sf::Mouse can retrieve the
-/// state of the cursor and the buttons at any timer
+/// state of the cursor and the buttons at any time
 /// (you don't need to store and update a boolean on your side
 /// in order to know if a button is pressed or released), and you
 /// always get the real state of the mouse, even if it is

@@ -81,7 +81,7 @@ public:
     /// font that supports that size is used.
     ///
     /// \param string         Text assigned to the string
-    /// \param font           Font used to bonusSelector the string
+    /// \param font           Font used to draw the string
     /// \param characterSize  Base size of characters, in pixels
     ///
     ////////////////////////////////////////////////////////////
@@ -255,7 +255,7 @@ public:
     ///
     /// The returned string is a sf::String, which can automatically
     /// be converted to standard string types. So, the following
-    /// lines of playerMotion are all valid:
+    /// lines of code are all valid:
     /// \code
     /// sf::String   s1 = text.getString();
     /// std::string  s2 = text.getString();
@@ -417,7 +417,7 @@ private:
     ////////////////////////////////////////////////////////////
     /// \brief Draw the text to a render target
     ///
-    /// \param target Render target to bonusSelector to
+    /// \param target Render target to draw to
     /// \param states Current render states
     ///
     ////////////////////////////////////////////////////////////
@@ -479,7 +479,7 @@ private:
 ///
 /// The separation of sf::Font and sf::Text allows more flexibility
 /// and better performances: indeed a sf::Font is a heavy resource,
-/// and any operation on it is slow (often too slow for real-timer
+/// and any operation on it is slow (often too slow for real-time
 /// applications). On the other side, a sf::Text is a lightweight
 /// object which can combine the glyphs data and metrics of a sf::Font
 /// to display any text on a render target.
@@ -505,7 +505,7 @@ private:
 /// text.setFillColor(sf::Color::Red);
 ///
 /// // Draw it
-/// window.bonusSelector(text);
+/// window.draw(text);
 /// \endcode
 ///
 /// \see sf::Font, sf::Transformable
