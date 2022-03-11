@@ -1,7 +1,7 @@
 # Candy Breakout
 
 ### DEMO
-![DEMO](https://cdn.discordapp.com/attachments/843643336346959874/944295268818489374/WorkInProgress.gif)
+![DEMO](https://github.com/valeriehernandez-7/Candy-Breakout/blob/main/docs/DEMO.gif)
 
 ### Requirements
 - [CMAKE](https://cmake.org/download/)
